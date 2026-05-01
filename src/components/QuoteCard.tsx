@@ -55,7 +55,7 @@ export function QuoteCard() {
                   </div>
                   <div className="flex-1 flex items-center">
                     <blockquote className="text-white text-lg font-medium leading-relaxed">
-                      "{quote.quote}"
+                      &ldquo;{quote.quote}&rdquo;
                     </blockquote>
                   </div>
                   <p className="text-white/70 text-sm mt-4">点击查看释义</p>
