@@ -225,6 +225,13 @@
   list-style: none;
 }
 
+.wx-md ul ul,
+.wx-md ul ol,
+.wx-md ol ul,
+.wx-md ol ol {
+  margin: 10px 0 10px 18px;
+}
+
 .wx-md ul li,
 .wx-md ol li {
   margin: 6px 0;
@@ -244,6 +251,28 @@
   left: 0;
   top: 0;
   color: var(--wx-ink-faint);
+}
+
+.wx-md ul ul li {
+  padding-left: 16px;
+}
+
+.wx-md ul ul li::before {
+  content: "•";
+  color: var(--wx-ink-faint);
+}
+
+.wx-md ol ul li {
+  padding-left: 16px;
+}
+
+.wx-md ol ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--wx-ink-faint);
+  font-weight: 600;
 }
 
 .wx-md ol {
