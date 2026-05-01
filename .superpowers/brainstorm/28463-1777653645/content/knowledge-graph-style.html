@@ -1,0 +1,145 @@
+<h2>第一卷知识图谱：展示形态</h2>
+<p class="subtitle">选择你更接近示例图的图谱形态（后续再定节点颜色体系与关系类型）</p>
+
+<div class="cards">
+  <div class="card" data-choice="force" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">A · 力导向聚类图（最像示例）</div>
+        <div class="mockup-body">
+          <svg viewBox="0 0 520 240" width="100%" height="200" style="background:rgba(201,100,66,0.03);border-radius:14px;border:1px solid var(--wx-panel-border)">
+            <g stroke="#9aa4b2" stroke-width="1.2" opacity="0.9">
+              <line x1="260" y1="120" x2="150" y2="70"/>
+              <line x1="260" y1="120" x2="120" y2="140"/>
+              <line x1="260" y1="120" x2="170" y2="180"/>
+              <line x1="260" y1="120" x2="360" y2="70"/>
+              <line x1="260" y1="120" x2="400" y2="140"/>
+              <line x1="260" y1="120" x2="350" y2="185"/>
+              <line x1="400" y1="140" x2="470" y2="110"/>
+              <line x1="120" y1="140" x2="60" y2="120"/>
+            </g>
+            <g font-size="12" font-family="system-ui, sans-serif" fill="#243041">
+              <circle cx="260" cy="120" r="26" fill="#3b82f6" opacity="0.92"/>
+              <text x="260" y="125" text-anchor="middle" fill="#ffffff">第一卷</text>
+
+              <circle cx="150" cy="70" r="18" fill="#22c55e" opacity="0.9"/>
+              <text x="150" y="74" text-anchor="middle" fill="#ffffff">阶级</text>
+
+              <circle cx="120" cy="140" r="18" fill="#22c55e" opacity="0.9"/>
+              <text x="120" y="144" text-anchor="middle" fill="#ffffff">农民</text>
+
+              <circle cx="170" cy="180" r="18" fill="#f97316" opacity="0.9"/>
+              <text x="170" y="184" text-anchor="middle" fill="#ffffff">组织</text>
+
+              <circle cx="360" cy="70" r="18" fill="#a855f7" opacity="0.9"/>
+              <text x="360" y="74" text-anchor="middle" fill="#ffffff">统一</text>
+
+              <circle cx="400" cy="140" r="18" fill="#a855f7" opacity="0.9"/>
+              <text x="400" y="144" text-anchor="middle" fill="#ffffff">民主</text>
+
+              <circle cx="350" cy="185" r="18" fill="#ef4444" opacity="0.9"/>
+              <text x="350" y="189" text-anchor="middle" fill="#ffffff">战略</text>
+
+              <circle cx="470" cy="110" r="14" fill="#60a5fa" opacity="0.9"/>
+              <text x="470" y="114" text-anchor="middle" fill="#ffffff">方法</text>
+
+              <circle cx="60" cy="120" r="14" fill="#34d399" opacity="0.9"/>
+              <text x="60" y="124" text-anchor="middle" fill="#ffffff">经济</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>聚类、可拖拽、可缩放</h3>
+      <p>节点按主题/层级聚类，关系线可标注“推进/支撑/对立/继承”，阅读体验接近你给的示例图。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="timeline" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">B · 时间轴骨架 + 交叉关系</div>
+        <div class="mockup-body">
+          <svg viewBox="0 0 520 240" width="100%" height="200" style="background:rgba(201,100,66,0.03);border-radius:14px;border:1px solid var(--wx-panel-border)">
+            <g stroke="#9aa4b2" stroke-width="2" opacity="0.7">
+              <line x1="60" y1="120" x2="460" y2="120"/>
+            </g>
+            <g stroke="#9aa4b2" stroke-width="1.2" opacity="0.9">
+              <path d="M120 120 C180 50, 260 50, 320 120" fill="none"/>
+              <path d="M200 120 C260 190, 340 190, 400 120" fill="none"/>
+            </g>
+            <g font-size="12" font-family="system-ui, sans-serif" fill="#243041">
+              <circle cx="120" cy="120" r="16" fill="#3b82f6" opacity="0.92"/>
+              <text x="120" y="124" text-anchor="middle" fill="#ffffff">1925</text>
+
+              <circle cx="200" cy="120" r="16" fill="#22c55e" opacity="0.92"/>
+              <text x="200" y="124" text-anchor="middle" fill="#ffffff">1927</text>
+
+              <circle cx="320" cy="120" r="16" fill="#f97316" opacity="0.92"/>
+              <text x="320" y="124" text-anchor="middle" fill="#ffffff">1930</text>
+
+              <circle cx="400" cy="120" r="16" fill="#a855f7" opacity="0.92"/>
+              <text x="400" y="124" text-anchor="middle" fill="#ffffff">1937</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>时间先后感最强</h3>
+      <p>按写作时间串起“进度”，再叠加跨篇关系；适合你强调“上一篇/下一篇（进度）”。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="layered" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">C · 分层同心图（内核→工具→案例）</div>
+        <div class="mockup-body">
+          <svg viewBox="0 0 520 240" width="100%" height="200" style="background:rgba(201,100,66,0.03);border-radius:14px;border:1px solid var(--wx-panel-border)">
+            <g fill="none" stroke="#9aa4b2" opacity="0.5">
+              <circle cx="260" cy="120" r="80"/>
+              <circle cx="260" cy="120" r="50"/>
+              <circle cx="260" cy="120" r="22"/>
+            </g>
+            <g stroke="#9aa4b2" stroke-width="1.2" opacity="0.9">
+              <line x1="260" y1="120" x2="260" y2="40"/>
+              <line x1="260" y1="120" x2="340" y2="120"/>
+              <line x1="260" y1="120" x2="210" y2="185"/>
+              <line x1="260" y1="120" x2="180" y2="120"/>
+              <line x1="260" y1="120" x2="300" y2="190"/>
+            </g>
+            <g font-size="12" font-family="system-ui, sans-serif" fill="#243041">
+              <circle cx="260" cy="120" r="22" fill="#3b82f6" opacity="0.92"/>
+              <text x="260" y="125" text-anchor="middle" fill="#ffffff">内核</text>
+
+              <circle cx="260" cy="40" r="16" fill="#a855f7" opacity="0.92"/>
+              <text x="260" y="44" text-anchor="middle" fill="#ffffff">统一</text>
+
+              <circle cx="340" cy="120" r="16" fill="#ef4444" opacity="0.92"/>
+              <text x="340" y="124" text-anchor="middle" fill="#ffffff">战略</text>
+
+              <circle cx="180" cy="120" r="16" fill="#22c55e" opacity="0.92"/>
+              <text x="180" y="124" text-anchor="middle" fill="#ffffff">群众</text>
+
+              <circle cx="210" cy="185" r="16" fill="#f97316" opacity="0.92"/>
+              <text x="210" y="189" text-anchor="middle" fill="#ffffff">组织</text>
+
+              <circle cx="300" cy="190" r="16" fill="#34d399" opacity="0.92"/>
+              <text x="300" y="194" text-anchor="middle" fill="#ffffff">经济</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>层级关系最清晰</h3>
+      <p>更像“知识体系”而不是“网络”，适合你要的“等级/进度”分层展示。</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="subtitle">点击选择一个（可随时改）。我会据此继续细化：节点类型、关系类型、配色与交互（筛选/搜索/定位到文章）。</p>
+</div>
