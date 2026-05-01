@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm';
 import { getChapterBySlug } from '@/lib/maoxuan/content';
 import { extractToc } from '@/lib/maoxuan/toc';
 import { slugifyHeading } from '@/lib/maoxuan/slug';
+import { ChapterToc } from '@/components/ChapterToc';
 
 export default function ChapterPage({ params }: { params: { slug: string } }) {
   const chapter = getChapterBySlug(params.slug);
@@ -31,25 +32,7 @@ export default function ChapterPage({ params }: { params: { slug: string } }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8">
         <aside className="lg:sticky lg:top-6 h-fit rounded-2xl p-4 wx-surface">
-          <div className="text-sm font-semibold mb-3" style={{ color: 'var(--wx-ink)' }}>
-            目录
-          </div>
-          <nav className="space-y-2">
-            {toc.map((t) => (
-              <a
-                key={`${t.id}-${t.text}`}
-                href={`#${t.id}`}
-                className={[
-                  'block text-sm hover:underline',
-                  t.depth === 3 ? 'pl-3 text-[13px]' : '',
-                  t.depth === 4 ? 'pl-6 text-[12px]' : '',
-                ].join(' ')}
-                style={{ color: 'var(--wx-ink-soft)' }}
-              >
-                {t.text}
-              </a>
-            ))}
-          </nav>
+          <ChapterToc slug={params.slug} toc={toc} />
         </aside>
 
         <article className="wx-md">
