@@ -5,9 +5,19 @@ import remarkGfm from 'remark-gfm';
 import { getStudyOriginalById } from '@/lib/study/content';
 import { WxHighlightText } from '@/components/WxHighlightText';
 
+function normalizeParagraphs(text: string) {
+  const t = text.replace(/\r/g, '').trim();
+  const cleaned = t
+    .split('\n')
+    .map((l) => l.replace(/^\s*-\s+/, ''))
+    .join('\n');
+  return cleaned.replace(/([^\n])\n(?!\n)/g, '$1\n\n');
+}
+
 export default function OriginalPage({ params }: { params: { id: string } }) {
   const doc = getStudyOriginalById(params.id);
   if (!doc) notFound();
+  const content = normalizeParagraphs(doc.content);
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
@@ -21,15 +31,12 @@ export default function OriginalPage({ params }: { params: { id: string } }) {
       </div>
 
       <header className="mb-8">
-        <div className="text-xs mb-2" style={{ color: 'var(--wx-ink-faint)' }}>
-          原文 · {doc.item.id}
-        </div>
         <h1 className="text-3xl md:text-4xl font-serif font-bold" style={{ color: 'var(--wx-ink)' }}>
           {doc.item.title}
         </h1>
       </header>
 
-      <article className="wx-md">
+      <article className="wx-md wx-original">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
@@ -45,10 +52,9 @@ export default function OriginalPage({ params }: { params: { id: string } }) {
             ),
           }}
         >
-          {doc.content}
+          {content}
         </ReactMarkdown>
       </article>
     </main>
   );
 }
-

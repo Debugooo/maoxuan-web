@@ -35,11 +35,8 @@ export default function StudyPage() {
               return (
                 <li key={id}>
                   <Link href={`/study/${id}`} className="hover:underline" style={{ color: 'var(--wx-ink)' }}>
-                    {id} · {it.title}
+                    {it.title}
                   </Link>
-                  <div className="text-xs mt-1" style={{ color: 'var(--wx-ink-faint)' }}>
-                    {it.volume} · {it.date ?? '日期待补'}
-                  </div>
                 </li>
               );
             })}
@@ -53,4 +50,3 @@ export default function StudyPage() {
     </main>
   );
 }
-

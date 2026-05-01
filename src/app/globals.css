@@ -201,6 +201,13 @@
   font-family: var(--wx-serif);
 }
 
+.wx-md-plain {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
 .wx-md > *:first-child {
   margin-top: 0;
 }
@@ -209,6 +216,19 @@
   font-size: 15px;
   line-height: 26.25px;
   margin: 0 0 14px;
+}
+
+.wx-original {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.wx-original p {
+  text-indent: 2em;
+}
+
+.wx-original h3 {
+  text-align: center;
 }
 
 .wx-md a {
