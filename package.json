@@ -7,12 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "validate:content": "node scripts/validate-maoxuan-md.mjs"
+    "validate:content": "node scripts/validate-maoxuan-md.mjs",
+    "validate:study": "node scripts/validate-study-content.mjs"
   },
   "dependencies": {
     "d3-force": "^3.0.0",
     "gray-matter": "^4.0.3",
+    "he": "^1.2.0",
+    "iconv-lite": "^0.7.2",
     "next": "14.2.5",
+    "node-html-parser": "^7.1.0",
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^10.1.0",

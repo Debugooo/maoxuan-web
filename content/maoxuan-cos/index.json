@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "volumes": {
+    "v1": {
+      "label": "第一卷",
+      "items": [
+        {
+          "id": "mx-v1-017",
+          "volume": "v1",
+          "title": "实践论",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-193707.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-017.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-017.md",
+          "cos": { "stage": 1, "module": "kernel" },
+          "prev_learning": null,
+          "next_learning": null,
+          "cross_refs": [],
+          "concepts": []
+        }
+      ]
+    },
+    "v2": { "label": "第二卷", "items": [] },
+    "v3": { "label": "第三卷", "items": [] },
+    "v4": { "label": "第四卷", "items": [] }
+  },
+  "learningOrder": ["mx-v1-017"],
+  "concepts": []
+}
+
