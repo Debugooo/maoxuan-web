@@ -10,8 +10,10 @@
 - slug: URL 友好标识（建议用拼音或英文短语）
 - title: 篇名（含书名号）
 - volume: 卷信息（未知可填 1-4 或留空字符串）
+- date: 写作时间（YYYY-MM 或 YYYY-MM-DD）
 - core_level: S / A / B
 - tags: 方法论标签（矛盾/实践/调查/组织/战略/战术/资源/复盘 等）
+- concepts: 概念节点（用于知识图谱；建议从 tags 细化而来）
 - scenarios: 现代场景适配度（high/medium/low）
 
 ## 单篇正文结构（必填）

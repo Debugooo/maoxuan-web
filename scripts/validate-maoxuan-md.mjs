@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import matter from 'gray-matter';
 
 const ROOT = path.resolve(process.cwd(), 'content/maoxuan');
 const REQUIRED_HEADINGS = [
@@ -21,6 +22,14 @@ function hasFrontmatter(content) {
   return content.startsWith('---\n') && content.includes('\n---\n');
 }
 
+function isStringArray(value) {
+  return Array.isArray(value) && value.every((v) => typeof v === 'string');
+}
+
+function isValidDate(value) {
+  return typeof value === 'string' && /^\d{4}-\d{2}(-\d{2})?$/.test(value);
+}
+
 function validateFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
   const rel = path.relative(process.cwd(), filePath);
@@ -28,6 +37,15 @@ function validateFile(filePath) {
   if (!hasFrontmatter(content)) {
     return { ok: false, message: `${rel}: missing YAML frontmatter` };
   }
+
+  const parsed = matter(content);
+  const fm = parsed.data ?? {};
+  if (typeof fm.slug !== 'string' || !fm.slug.trim()) return { ok: false, message: `${rel}: missing frontmatter.slug` };
+  if (typeof fm.title !== 'string' || !fm.title.trim()) return { ok: false, message: `${rel}: missing frontmatter.title` };
+  if (!['S', 'A', 'B'].includes(fm.core_level)) return { ok: false, message: `${rel}: invalid frontmatter.core_level` };
+  if (!isStringArray(fm.tags) || fm.tags.length === 0) return { ok: false, message: `${rel}: invalid frontmatter.tags[]` };
+  if (!isStringArray(fm.concepts)) return { ok: false, message: `${rel}: invalid frontmatter.concepts[]` };
+  if (!isValidDate(fm.date)) return { ok: false, message: `${rel}: invalid frontmatter.date (YYYY-MM or YYYY-MM-DD)` };
 
   const missing = REQUIRED_HEADINGS.filter((h) => !content.includes(h));
   if (missing.length) {

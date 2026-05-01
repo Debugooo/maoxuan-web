@@ -4,6 +4,23 @@ import matter from 'gray-matter';
 import type { Chapter, ChapterFrontmatter, ChapterIndexItem, LibraryIndex } from './types';
 
 const CONTENT_ROOT = path.join(process.cwd(), 'content');
+const DATE_RE = /^\d{4}-\d{2}(?:-\d{2})?$/;
+
+function assertStringArray(value: unknown, field: string, filePath: string) {
+  if (!Array.isArray(value)) throw new Error(`Missing ${field}[] in ${filePath}`);
+  return value.map((v) => String(v)).filter((v) => v.trim().length > 0);
+}
+
+function assertDate(value: unknown, filePath: string) {
+  if (typeof value !== 'string' || !DATE_RE.test(value)) throw new Error(`Invalid date in ${filePath}`);
+  return value;
+}
+
+function dateKey(date: string) {
+  const [y, m, d] = date.split('-');
+  const day = d ? Number(d) : 0;
+  return Number(y) * 10000 + Number(m) * 100 + day;
+}
 
 function assertFrontmatter(data: unknown, filePath: string): ChapterFrontmatter {
   const d = data as Partial<ChapterFrontmatter>;
@@ -11,18 +28,21 @@ function assertFrontmatter(data: unknown, filePath: string): ChapterFrontmatter 
   if (!d || typeof d !== 'object') throw new Error(`Invalid frontmatter in ${filePath}`);
   if (!d.slug || typeof d.slug !== 'string') throw new Error(`Missing slug in ${filePath}`);
   if (!d.title || typeof d.title !== 'string') throw new Error(`Missing title in ${filePath}`);
+  const date = assertDate(d.date, filePath);
   if (!d.core_level || !['S', 'A', 'B'].includes(d.core_level)) throw new Error(`Invalid core_level in ${filePath}`);
-  if (!Array.isArray(d.tags)) throw new Error(`Missing tags[] in ${filePath}`);
+  const tags = assertStringArray(d.tags, 'tags', filePath);
+  const concepts = assertStringArray(d.concepts, 'concepts', filePath);
 
   return {
     slug: d.slug,
     title: d.title,
     volume: d.volume ?? '',
+    date,
     core_level: d.core_level,
-    tags: d.tags,
+    tags,
+    concepts,
     scenarios: d.scenarios ?? {},
     summary: d.summary,
-    date: d.date,
     source: d.source,
   };
 }
@@ -67,6 +87,21 @@ export function getLibraryIndex(): LibraryIndex {
   Object.values(tagsMap).forEach((arr) => arr.sort(sortByTitle));
 
   return { chapters, volumesMap, tagsMap };
+}
+
+export function getChaptersChronological(): ChapterIndexItem[] {
+  const index = getLibraryIndex();
+  return [...index.chapters].sort((a, b) => dateKey(a.date) - dateKey(b.date) || a.slug.localeCompare(b.slug));
+}
+
+export function getChapterNeighbors(slug: string) {
+  const chapters = getChaptersChronological();
+  const idx = chapters.findIndex((c) => c.slug === slug);
+  if (idx < 0) return { prev: null, next: null };
+  return {
+    prev: idx > 0 ? chapters[idx - 1] : null,
+    next: idx < chapters.length - 1 ? chapters[idx + 1] : null,
+  };
 }
 
 export function getChapterBySlug(slug: string): Chapter | null {

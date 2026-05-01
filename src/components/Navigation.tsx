@@ -17,6 +17,9 @@ export function Navbar() {
             <Link href="/library" className="transition-colors" style={{ color: 'var(--wx-ink-soft)' }}>
               阅读库
             </Link>
+            <Link href="/map" className="transition-colors" style={{ color: 'var(--wx-ink-soft)' }}>
+              知识图谱
+            </Link>
             <Link href="/toolkit" className="transition-colors" style={{ color: 'var(--wx-ink-soft)' }}>
               工具箱
             </Link>

@@ -27,6 +27,13 @@ export default function Page() {
               进入阅读库
             </Link>
             <Link
+              href="/map"
+              className="inline-flex items-center justify-center rounded-xl px-4 py-2 font-semibold"
+              style={{ border: '1px solid var(--wx-panel-border)', color: 'var(--wx-ink)' }}
+            >
+              知识图谱
+            </Link>
+            <Link
               href="/toolkit"
               className="inline-flex items-center justify-center rounded-xl px-4 py-2 font-semibold"
               style={{ border: '1px solid var(--wx-panel-border)', color: 'var(--wx-ink)' }}

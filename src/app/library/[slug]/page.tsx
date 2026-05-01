@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { getChapterBySlug } from '@/lib/maoxuan/content';
+import { getChapterBySlug, getChapterNeighbors } from '@/lib/maoxuan/content';
 import { extractToc } from '@/lib/maoxuan/toc';
 import { slugifyHeading } from '@/lib/maoxuan/slug';
 import { ChapterToc } from '@/components/ChapterToc';
@@ -12,6 +12,7 @@ export default function ChapterPage({ params }: { params: { slug: string } }) {
   if (!chapter) notFound();
 
   const toc = extractToc(chapter.content);
+  const { prev, next } = getChapterNeighbors(params.slug);
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
@@ -71,6 +72,43 @@ export default function ChapterPage({ params }: { params: { slug: string } }) {
           >
             {chapter.content}
           </ReactMarkdown>
+
+          <div className="mt-10 pt-6" style={{ borderTop: '1px solid var(--wx-hair)' }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {prev ? (
+                <Link
+                  href={`/library/${prev.slug}`}
+                  className="rounded-xl px-4 py-3 transition-colors"
+                  style={{ border: '1px solid var(--wx-panel-border)', color: 'var(--wx-ink)' }}
+                >
+                  <div className="text-xs" style={{ color: 'var(--wx-ink-faint)' }}>
+                    上一篇
+                  </div>
+                  <div className="mt-1 font-semibold">{prev.title}</div>
+                </Link>
+              ) : (
+                <div className="rounded-xl px-4 py-3" style={{ border: '1px dashed var(--wx-panel-border)', color: 'var(--wx-ink-faint)' }}>
+                  已是第一篇
+                </div>
+              )}
+              {next ? (
+                <Link
+                  href={`/library/${next.slug}`}
+                  className="rounded-xl px-4 py-3 transition-colors"
+                  style={{ border: '1px solid var(--wx-panel-border)', color: 'var(--wx-ink)' }}
+                >
+                  <div className="text-xs" style={{ color: 'var(--wx-ink-faint)' }}>
+                    下一篇
+                  </div>
+                  <div className="mt-1 font-semibold">{next.title}</div>
+                </Link>
+              ) : (
+                <div className="rounded-xl px-4 py-3" style={{ border: '1px dashed var(--wx-panel-border)', color: 'var(--wx-ink-faint)' }}>
+                  已是最后一篇
+                </div>
+              )}
+            </div>
+          </div>
         </article>
       </div>
     </main>

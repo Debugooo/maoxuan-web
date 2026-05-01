@@ -5,11 +5,12 @@ export type ChapterFrontmatter = {
   slug: string;
   title: string;
   volume?: string;
+  date: string;
   core_level: CoreLevel;
   tags: string[];
+  concepts: string[];
   scenarios?: Record<string, ScenarioLevel>;
   summary?: string;
-  date?: string;
   source?: string;
 };
 
