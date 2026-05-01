@@ -13,6 +13,19 @@
           "original_path": "content/maoxuan-original/v1/mx-v1-017.md",
           "cos": { "stage": 1, "module": "kernel" },
           "prev_learning": null,
+          "next_learning": "mx-v1-018",
+          "cross_refs": [],
+          "concepts": []
+        },
+        {
+          "id": "mx-v1-018",
+          "volume": "v1",
+          "title": "矛盾论",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-193708.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-018.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-018.md",
+          "cos": { "stage": 2, "module": "kernel" },
+          "prev_learning": "mx-v1-017",
           "next_learning": null,
           "cross_refs": [],
           "concepts": []
@@ -23,7 +36,6 @@
     "v3": { "label": "第三卷", "items": [] },
     "v4": { "label": "第四卷", "items": [] }
   },
-  "learningOrder": ["mx-v1-017"],
+  "learningOrder": ["mx-v1-017", "mx-v1-018"],
   "concepts": []
 }
-
