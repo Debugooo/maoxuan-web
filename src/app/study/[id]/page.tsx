@@ -9,6 +9,14 @@ function stripHeadingNumber(text: string) {
   return text.replace(/^\s*\d+\s+/, '').trim();
 }
 
+function isQuotesSection(title: string) {
+  return title.startsWith('金句摘录');
+}
+
+function isNotesSection(title: string) {
+  return title.startsWith('逐段精读指引');
+}
+
 function splitByH2(markdown: string) {
   const lines = markdown.split('\n');
   const sections: Array<{ heading: string; body: string }> = [];
@@ -62,7 +70,10 @@ export default function StudyGuidePage({ params }: { params: { id: string } }) {
   const original = getStudyOriginalById(params.id);
   const highlightMap = original ? extractHighlightsMap(original.content) : new Map<string, string>();
 
-  const sections = splitByH2(doc.content);
+  const rawSections = splitByH2(doc.content);
+  const sections = rawSections
+    .filter((s) => !isQuotesSection(stripHeadingNumber(s.heading)))
+    .map((s) => ({ ...s, heading: stripHeadingNumber(s.heading) }));
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
@@ -81,50 +92,77 @@ export default function StudyGuidePage({ params }: { params: { id: string } }) {
         </h1>
       </header>
 
-      <div className="space-y-4">
-        {sections.map((s) => {
-          const title = stripHeadingNumber(s.heading);
-          const h2Id = slugifyHeading(title);
-          const isNotes = title.startsWith('逐段精读指引');
-          return (
-            <section key={h2Id} className="wx-surface rounded-2xl p-5">
-              <h2 id={h2Id} className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
-                {title}
-              </h2>
-              <div className="wx-md wx-md-plain mt-4">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    li: ({ children, ...props }) => {
-                      const code = extractNoteCode(children);
-                      const excerpt = isNotes && code ? highlightMap.get(code) : null;
-                      return (
-                        <li id={code ? `note-${code}` : undefined} {...props}>
-                          <div>{children}</div>
-                          {excerpt ? (
-                            <div
-                              className="mt-2 px-3 py-2 rounded-xl text-sm"
-                              style={{
-                                background: 'rgba(201, 100, 66, 0.06)',
-                                border: '1px solid var(--wx-panel-border)',
-                                color: 'var(--wx-ink)',
-                                whiteSpace: 'pre-wrap',
-                              }}
-                            >
-                              {excerpt}
-                            </div>
-                          ) : null}
-                        </li>
-                      );
-                    },
-                  }}
-                >
-                  {s.body}
-                </ReactMarkdown>
-              </div>
-            </section>
-          );
-        })}
+      <div className="grid grid-cols-1 lg:grid-cols-[240px,1fr] gap-6">
+        <aside className="hidden lg:block">
+          <div className="wx-surface rounded-2xl p-4 sticky top-6">
+            <details open>
+              <summary className="font-semibold cursor-pointer" style={{ color: 'var(--wx-ink)' }}>
+                目录
+              </summary>
+              <nav className="mt-3">
+                <ul className="space-y-2 text-sm" style={{ color: 'var(--wx-ink-soft)' }}>
+                  {sections.map((s) => {
+                    const title = s.heading;
+                    const h2Id = slugifyHeading(title);
+                    return (
+                      <li key={h2Id}>
+                        <a href={`#${h2Id}`} className="hover:underline" style={{ color: 'var(--wx-ink-soft)' }}>
+                          {title}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            </details>
+          </div>
+        </aside>
+
+        <div className="space-y-4">
+          {sections.map((s) => {
+            const title = s.heading;
+            const h2Id = slugifyHeading(title);
+            const isNotes = isNotesSection(title);
+            return (
+              <section key={h2Id} className="wx-surface rounded-2xl p-5">
+                <h2 id={h2Id} className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
+                  {title}
+                </h2>
+                <div className="wx-md wx-md-plain mt-4">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      li: ({ children, ...props }) => {
+                        const code = extractNoteCode(children);
+                        const excerpt = isNotes && code ? highlightMap.get(code) : null;
+                        return (
+                          <li id={code ? `note-${code}` : undefined} {...props}>
+                            {excerpt ? (
+                              <div
+                                className="mb-2 px-3 py-2 rounded-xl text-sm"
+                                style={{
+                                  background: 'rgba(201, 100, 66, 0.06)',
+                                  border: '1px solid var(--wx-panel-border)',
+                                  color: 'var(--wx-ink)',
+                                  whiteSpace: 'pre-wrap',
+                                }}
+                              >
+                                {excerpt}
+                              </div>
+                            ) : null}
+                            <div>{children}</div>
+                          </li>
+                        );
+                      },
+                    }}
+                  >
+                    {s.body}
+                  </ReactMarkdown>
+                </div>
+              </section>
+            );
+          })}
+        </div>
       </div>
     </main>
   );
