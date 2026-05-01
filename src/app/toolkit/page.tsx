@@ -100,17 +100,28 @@ export default function ToolkitPage() {
   return (
     <main className="max-w-5xl mx-auto px-4 py-10">
       <header className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 dark:text-white">生存工具箱</h1>
-        <p className="mt-2 text-slate-600 dark:text-slate-300">输入处境，按模型输出行动步骤、校验与止损，并支持本地保存。</p>
+        <h1 className="text-3xl md:text-4xl font-serif font-bold" style={{ color: 'var(--wx-ink)' }}>
+          生存工具箱
+        </h1>
+        <p className="mt-2" style={{ color: 'var(--wx-ink-soft)' }}>
+          输入处境，按模型输出行动步骤、校验与止损，并支持本地保存。
+        </p>
       </header>
 
       <section className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
-        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
-          <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">选择模型</label>
+        <div className="rounded-2xl p-6 wx-surface">
+          <label className="text-sm font-semibold" style={{ color: 'var(--wx-ink-soft)' }}>
+            选择模型
+          </label>
           <select
-            className="mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2"
+            className="mt-2 w-full rounded-xl px-3 py-2"
             value={modelId}
             onChange={(e) => setModelId(e.target.value as ToolkitModelId)}
+            style={{
+              border: '1px solid var(--wx-panel-border)',
+              background: 'var(--wx-panel-bg)',
+              color: 'var(--wx-ink)',
+            }}
           >
             <option value="shijian.a">《实践论》模型A：调查研究四步法</option>
             <option value="shijian.b">《实践论》模型B：小步试验算法</option>
@@ -120,50 +131,82 @@ export default function ToolkitPage() {
 
           <div className="mt-5 space-y-4">
             <div>
-              <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">你的处境（尽量具体）</label>
+              <label className="text-sm font-semibold" style={{ color: 'var(--wx-ink-soft)' }}>
+                你的处境（尽量具体）
+              </label>
               <textarea
-                className="mt-2 w-full min-h-28 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2"
+                className="mt-2 w-full min-h-28 rounded-xl px-3 py-2"
                 value={situation}
                 onChange={(e) => setSituation(e.target.value)}
+                style={{
+                  border: '1px solid var(--wx-panel-border)',
+                  background: 'var(--wx-panel-bg)',
+                  color: 'var(--wx-ink)',
+                }}
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">约束（时间/资源/风险）</label>
+              <label className="text-sm font-semibold" style={{ color: 'var(--wx-ink-soft)' }}>
+                约束（时间/资源/风险）
+              </label>
               <input
-                className="mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2"
+                className="mt-2 w-full rounded-xl px-3 py-2"
                 value={constraints}
                 onChange={(e) => setConstraints(e.target.value)}
+                style={{
+                  border: '1px solid var(--wx-panel-border)',
+                  background: 'var(--wx-panel-bg)',
+                  color: 'var(--wx-ink)',
+                }}
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">胜负指标（1 条）</label>
+              <label className="text-sm font-semibold" style={{ color: 'var(--wx-ink-soft)' }}>
+                胜负指标（1 条）
+              </label>
               <input
-                className="mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2"
+                className="mt-2 w-full rounded-xl px-3 py-2"
                 value={successMetric}
                 onChange={(e) => setSuccessMetric(e.target.value)}
+                style={{
+                  border: '1px solid var(--wx-panel-border)',
+                  background: 'var(--wx-panel-bg)',
+                  color: 'var(--wx-ink)',
+                }}
               />
             </div>
           </div>
 
           <button
-            className="mt-6 inline-flex items-center justify-center rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-2 font-semibold"
+            className="mt-6 inline-flex items-center justify-center rounded-xl px-4 py-2 font-semibold"
             onClick={onSave}
+            style={{ background: 'var(--wx-brand)', color: 'var(--wx-panel-bg)' }}
           >
             生成并保存
           </button>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white">最近记录</h2>
+        <div className="rounded-2xl p-6 wx-surface">
+          <h2 className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
+            最近记录
+          </h2>
           <div className="mt-4 space-y-3 max-h-[560px] overflow-auto pr-1">
-            {runs.length === 0 ? <div className="text-sm text-slate-600 dark:text-slate-300">暂无记录</div> : null}
+            {runs.length === 0 ? (
+              <div className="text-sm" style={{ color: 'var(--wx-ink-soft)' }}>
+                暂无记录
+              </div>
+            ) : null}
             {runs.map((r) => (
-              <div key={r.id} className="rounded-xl border border-slate-200 dark:border-slate-700 p-4">
-                <div className="text-xs text-slate-500 dark:text-slate-400">
+              <div key={r.id} className="rounded-xl p-4" style={{ border: '1px solid var(--wx-panel-border)', background: 'rgba(201, 100, 66, 0.03)' }}>
+                <div className="text-xs" style={{ color: 'var(--wx-ink-faint)' }}>
                   {new Date(r.createdAt).toLocaleString('zh-CN')} · {r.modelId}
                 </div>
-                <div className="mt-2 text-sm text-slate-900 dark:text-white whitespace-pre-wrap">{r.output.restatement}</div>
-                <div className="mt-3 text-xs text-slate-600 dark:text-slate-300">下一步：{r.output.nextSmallAction}</div>
+                <div className="mt-2 text-sm whitespace-pre-wrap" style={{ color: 'var(--wx-ink)' }}>
+                  {r.output.restatement}
+                </div>
+                <div className="mt-3 text-xs" style={{ color: 'var(--wx-ink-soft)' }}>
+                  下一步：{r.output.nextSmallAction}
+                </div>
               </div>
             ))}
           </div>
@@ -172,4 +215,3 @@ export default function ToolkitPage() {
     </main>
   );
 }
-

@@ -80,20 +80,34 @@ export default function TrainingPage() {
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
       <header className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 dark:text-white">训练与复盘</h1>
-        <p className="mt-2 text-slate-600 dark:text-slate-300">题库练习 + 复盘模板填写，本地自动保存并支持导出。</p>
+        <h1 className="text-3xl md:text-4xl font-serif font-bold" style={{ color: 'var(--wx-ink)' }}>
+          训练与复盘
+        </h1>
+        <p className="mt-2" style={{ color: 'var(--wx-ink-soft)' }}>
+          题库练习 + 复盘模板填写，本地自动保存并支持导出。
+        </p>
       </header>
 
       <div className="flex gap-2 mb-6">
         <button
-          className={`px-4 py-2 rounded-xl border ${tab === 'questions' ? 'bg-slate-900 text-white border-slate-900' : 'border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200'}`}
+          className="px-4 py-2 rounded-xl border"
           onClick={() => setTab('questions')}
+          style={
+            tab === 'questions'
+              ? { background: 'var(--wx-brand)', color: 'var(--wx-panel-bg)', borderColor: 'var(--wx-brand)' }
+              : { background: 'var(--wx-panel-bg)', color: 'var(--wx-ink)', borderColor: 'var(--wx-panel-border)' }
+          }
         >
           题库
         </button>
         <button
-          className={`px-4 py-2 rounded-xl border ${tab === 'reviews' ? 'bg-slate-900 text-white border-slate-900' : 'border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200'}`}
+          className="px-4 py-2 rounded-xl border"
           onClick={() => setTab('reviews')}
+          style={
+            tab === 'reviews'
+              ? { background: 'var(--wx-brand)', color: 'var(--wx-panel-bg)', borderColor: 'var(--wx-brand)' }
+              : { background: 'var(--wx-panel-bg)', color: 'var(--wx-ink)', borderColor: 'var(--wx-panel-border)' }
+          }
         >
           复盘
         </button>
@@ -101,38 +115,62 @@ export default function TrainingPage() {
 
       {tab === 'questions' ? (
         <section className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-6">
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4">
-            <div className="text-sm font-semibold text-slate-900 dark:text-white mb-3">题目</div>
+          <div className="rounded-2xl p-4 wx-surface">
+            <div className="text-sm font-semibold mb-3" style={{ color: 'var(--wx-ink)' }}>
+              题目
+            </div>
             <div className="space-y-2">
               {trainingQuestions.map((q) => (
                 <button
                   key={q.id}
                   onClick={() => setActiveQuestionId(q.id)}
-                  className={`w-full text-left rounded-xl p-3 border ${activeQuestionId === q.id ? 'border-slate-900 dark:border-white' : 'border-slate-200 dark:border-slate-700'}`}
+                  className="w-full text-left rounded-xl p-3 border"
+                  style={
+                    activeQuestionId === q.id
+                      ? { borderColor: 'var(--wx-brand)', background: 'rgba(201, 100, 66, 0.06)' }
+                      : { borderColor: 'var(--wx-panel-border)', background: 'transparent' }
+                  }
                 >
-                  <div className="text-sm font-semibold text-slate-900 dark:text-white">{q.title}</div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">{q.tags.join(' / ')}</div>
+                  <div className="text-sm font-semibold" style={{ color: 'var(--wx-ink)' }}>
+                    {q.title}
+                  </div>
+                  <div className="text-xs mt-1" style={{ color: 'var(--wx-ink-faint)' }}>
+                    {q.tags.join(' / ')}
+                  </div>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+          <div className="rounded-2xl p-6 wx-surface">
             {(() => {
               const q = trainingQuestions.find((x) => x.id === activeQuestionId);
               if (!q) return null;
               return (
                 <>
-                  <div className="text-sm text-slate-500 dark:text-slate-400">{q.chapterSlug}</div>
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white mt-2">{q.title}</h2>
-                  <p className="mt-3 text-slate-700 dark:text-slate-200 whitespace-pre-wrap">{q.prompt}</p>
+                  <div className="text-sm" style={{ color: 'var(--wx-ink-faint)' }}>
+                    {q.chapterSlug}
+                  </div>
+                  <h2 className="text-xl font-bold mt-2" style={{ color: 'var(--wx-ink)' }}>
+                    {q.title}
+                  </h2>
+                  <p className="mt-3 whitespace-pre-wrap" style={{ color: 'var(--wx-ink-soft)' }}>
+                    {q.prompt}
+                  </p>
 
                   <div className="mt-6">
-                    <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">你的答案（自动保存）</label>
+                    <label className="text-sm font-semibold" style={{ color: 'var(--wx-ink-soft)' }}>
+                      你的答案（自动保存）
+                    </label>
                     <textarea
-                      className="mt-2 w-full min-h-56 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2"
+                      className="mt-2 w-full min-h-56 rounded-xl px-3 py-2"
                       value={activeAnswer}
                       onChange={(e) => setAnswer(e.target.value)}
+                      style={{
+                        border: '1px solid var(--wx-panel-border)',
+                        background: 'var(--wx-panel-bg)',
+                        color: 'var(--wx-ink)',
+                      }}
                     />
                   </div>
                 </>
@@ -142,14 +180,24 @@ export default function TrainingPage() {
         </section>
       ) : (
         <section className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+          <div className="rounded-2xl p-6 wx-surface">
             <div className="flex items-center justify-between gap-4">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">复盘模板</h2>
+              <h2 className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
+                复盘模板
+              </h2>
               <div className="flex gap-2">
-                <button className="px-3 py-2 rounded-xl bg-slate-900 text-white" onClick={() => createReview('shijian')}>
+                <button
+                  className="px-3 py-2 rounded-xl"
+                  onClick={() => createReview('shijian')}
+                  style={{ background: 'var(--wx-brand)', color: 'var(--wx-panel-bg)' }}
+                >
                   新建实践论复盘
                 </button>
-                <button className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700" onClick={() => createReview('maodun')}>
+                <button
+                  className="px-3 py-2 rounded-xl border"
+                  onClick={() => createReview('maodun')}
+                  style={{ borderColor: 'var(--wx-panel-border)', color: 'var(--wx-ink)' }}
+                >
                   新建矛盾论复盘
                 </button>
               </div>
@@ -157,8 +205,8 @@ export default function TrainingPage() {
 
             <div className="mt-4 space-y-4">
               {reviews.map((r) => (
-                <div key={r.id} className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
-                  <div className="text-xs text-slate-500 dark:text-slate-400">
+                <div key={r.id} className="rounded-2xl p-4" style={{ border: '1px solid var(--wx-panel-border)', background: 'rgba(201, 100, 66, 0.03)' }}>
+                  <div className="text-xs" style={{ color: 'var(--wx-ink-faint)' }}>
                     {r.template === 'shijian' ? '实践论复盘' : '矛盾论复盘'} · {new Date(r.updatedAt).toLocaleString('zh-CN')}
                   </div>
                   <div className="mt-3 grid grid-cols-1 gap-3">
@@ -167,27 +215,44 @@ export default function TrainingPage() {
                       : ['主要矛盾与次要矛盾', '主要方面与次要方面', '集中力量打击点', '阶段判断与节奏', '结果与结构变化', '下一轮策略修正']
                     ).map((k) => (
                       <div key={k}>
-                        <div className="text-sm font-semibold text-slate-700 dark:text-slate-200">{k}</div>
+                        <div className="text-sm font-semibold" style={{ color: 'var(--wx-ink-soft)' }}>
+                          {k}
+                        </div>
                         <textarea
-                          className="mt-2 w-full min-h-20 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2"
+                          className="mt-2 w-full min-h-20 rounded-xl px-3 py-2"
                           value={r.fields[k] ?? ''}
                           onChange={(e) => updateReview(r.id, k, e.target.value)}
+                          style={{
+                            border: '1px solid var(--wx-panel-border)',
+                            background: 'var(--wx-panel-bg)',
+                            color: 'var(--wx-ink)',
+                          }}
                         />
                       </div>
                     ))}
                   </div>
-                  <button className="mt-4 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700" onClick={() => exportReview(r)}>
+                  <button
+                    className="mt-4 px-3 py-2 rounded-xl border"
+                    onClick={() => exportReview(r)}
+                    style={{ borderColor: 'var(--wx-panel-border)', color: 'var(--wx-ink)' }}
+                  >
                     导出 Markdown
                   </button>
                 </div>
               ))}
-              {reviews.length === 0 ? <div className="text-sm text-slate-600 dark:text-slate-300">尚无复盘记录</div> : null}
+              {reviews.length === 0 ? (
+                <div className="text-sm" style={{ color: 'var(--wx-ink-soft)' }}>
+                  尚无复盘记录
+                </div>
+              ) : null}
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white">提示</h2>
-            <ul className="mt-3 text-sm text-slate-700 dark:text-slate-200 space-y-2">
+          <div className="rounded-2xl p-6 wx-surface">
+            <h2 className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
+              提示
+            </h2>
+            <ul className="mt-3 text-sm space-y-2" style={{ color: 'var(--wx-ink-soft)' }}>
               <li>复盘默认本地保存，不需要登录。</li>
               <li>建议每次只抓一个“下一轮最小动作”，减少自嗨式复盘。</li>
               <li>导出 Markdown 后可放回仓库或个人笔记系统。</li>
@@ -198,4 +263,3 @@ export default function TrainingPage() {
     </main>
   );
 }
-
