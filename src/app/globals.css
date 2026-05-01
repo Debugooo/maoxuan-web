@@ -27,11 +27,12 @@
 }
 
 .prose-original p {
-  @apply mb-6 text-indent-2;
+  @apply mb-6;
+  text-indent: 2em;
 }
 
 .prose-original p:first-of-type {
-  @apply text-indent-0;
+  text-indent: 0;
 }
 
 /* 金句卡片动画 */
