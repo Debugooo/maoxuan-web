@@ -262,11 +262,39 @@
   color: var(--wx-ink-faint);
 }
 
+.wx-md ul ol li {
+  padding-left: 16px;
+  counter-increment: none;
+}
+
+.wx-md ul ol li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--wx-ink-faint);
+  font-weight: 600;
+}
+
 .wx-md ol ul li {
   padding-left: 16px;
 }
 
 .wx-md ol ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--wx-ink-faint);
+  font-weight: 600;
+}
+
+.wx-md ol ol li {
+  padding-left: 16px;
+  counter-increment: none;
+}
+
+.wx-md ol ol li::before {
   content: "•";
   position: absolute;
   left: 0;
