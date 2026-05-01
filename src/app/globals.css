@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "WXNum";
+  src: local("DIN"), local("DIN Alternate"), local("DIN Pro"), local("DIN Condensed"), local("Bahnschrift"), local("Roboto Condensed");
+  unicode-range: U+30-39;
+}
+
+@font-face {
+  font-family: "WXSerif";
+  src: local("Songti SC"), local("STSong"), local("SimSun"), local("Noto Serif CJK SC"), local("Source Han Serif SC"), local("Source Han Serif CN");
+  unicode-range: U+0-10FFFF;
+}
+
 @layer base {
   :root {
     --wx-app-bg: #F5F2EC;
@@ -16,8 +28,8 @@
     --wx-brand-soft: #E8A582;
     --wx-brand-faint: #F5E3D7;
     --wx-mono: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-    --wx-ui: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
-    --wx-serif: "PingFang SC", "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", serif;
+    --wx-ui: "WXNum", "WXSerif", serif;
+    --wx-serif: "WXNum", "WXSerif", serif;
   }
 
   .dark {
