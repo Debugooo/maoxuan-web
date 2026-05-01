@@ -5,6 +5,19 @@
       "label": "第一卷",
       "items": [
         {
+          "id": "mx-v1-001",
+          "volume": "v1",
+          "title": "中国社会各阶级的分析",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19251201.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-001.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-001.md",
+          "cos": { "stage": 1, "module": "kernel" },
+          "prev_learning": null,
+          "next_learning": null,
+          "cross_refs": [],
+          "concepts": []
+        },
+        {
           "id": "mx-v1-017",
           "volume": "v1",
           "title": "实践论",
@@ -13,7 +26,7 @@
           "original_path": "content/maoxuan-original/v1/mx-v1-017.md",
           "cos": { "stage": 1, "module": "kernel" },
           "prev_learning": null,
-          "next_learning": "mx-v1-018",
+          "next_learning": null,
           "cross_refs": [],
           "concepts": []
         },
@@ -36,6 +49,6 @@
     "v3": { "label": "第三卷", "items": [] },
     "v4": { "label": "第四卷", "items": [] }
   },
-  "learningOrder": ["mx-v1-017", "mx-v1-018"],
+  "learningOrder": ["mx-v1-001"],
   "concepts": []
 }
