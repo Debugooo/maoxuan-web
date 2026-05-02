@@ -45,9 +45,9 @@ function extractHighlights(content) {
 
 function extractNotes(content) {
   const codes = new Set();
-  const re = /^\s*-\s*(H\d{2})：/gm;
+  const re = /^\s*-\s*(?:〔(H\d{2})〕|(H\d{2})：)/gm;
   let m;
-  while ((m = re.exec(content))) codes.add(m[1]);
+  while ((m = re.exec(content))) codes.add(m[1] || m[2]);
   return codes;
 }
 
@@ -105,4 +105,3 @@ function main() {
 }
 
 main();
-
