@@ -58,7 +58,8 @@ function extractHighlightsMap(original: string) {
     if (!codeMatch) continue;
     const code = codeMatch[1];
     const text = raw.replace(/^\s*〔H\d{2}〕\s*/, '').trim();
-    map.set(code, text);
+    const cleaned = text.replace(/\[\d+\]/g, '').replace(/\s{2,}/g, ' ').trim();
+    map.set(code, cleaned);
   }
   return map;
 }
