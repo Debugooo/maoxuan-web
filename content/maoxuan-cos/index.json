@@ -104,6 +104,19 @@
           "original_path": "content/maoxuan-original/v1/mx-v1-008.md",
           "cos": { "stage": 4, "module": "economy" },
           "prev_learning": "mx-v1-007",
+          "next_learning": "mx-v1-009",
+          "cross_refs": [],
+          "concepts": []
+        },
+        {
+          "id": "mx-v1-009",
+          "volume": "v1",
+          "title": "怎样分析农村阶级",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-193310.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-009.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-009.md",
+          "cos": { "stage": 4, "module": "classification" },
+          "prev_learning": "mx-v1-008",
           "next_learning": null,
           "cross_refs": [],
           "concepts": []
@@ -140,6 +153,6 @@
     "v3": { "label": "第三卷", "items": [] },
     "v4": { "label": "第四卷", "items": [] }
   },
-  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004", "mx-v1-005", "mx-v1-006", "mx-v1-007", "mx-v1-008"],
+  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004", "mx-v1-005", "mx-v1-006", "mx-v1-007", "mx-v1-008", "mx-v1-009"],
   "concepts": []
 }
