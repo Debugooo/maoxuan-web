@@ -32,11 +32,10 @@ function hashString(input: string) {
 }
 
 function extractDateToken(url: string) {
-  const m = url.match(/maoxedong\/marxist\.org-chinese-mao-(\d{8}|\d{6}|\d{4})/);
-  if (m) return m[1];
-  const n = url.match(/maoxedong\/marxist\.org-chinese-mao-(\d{6})(?:[a-z])?\.htm/i);
-  if (n) return n[1];
-  return null;
+  const m = url.match(/maozedong\/marxist\.org-chinese-mao-([^./]+)\.htm/i);
+  const raw = m ? m[1] : null;
+  const token = raw ? raw.match(/(\d{8}|\d{6}|\d{4})/) : null;
+  return token ? token[1] : null;
 }
 
 function formatDate(token: string | null) {
