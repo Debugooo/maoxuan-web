@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>目录页布局方案</title>
+    <style>
+      :root {
+        --bg: #0b0f14;
+        --panel: rgba(255, 255, 255, 0.06);
+        --border: rgba(255, 255, 255, 0.12);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.7);
+        --faint: rgba(255, 255, 255, 0.55);
+        --brand: #8ab4ff;
+        --badge: rgba(255, 255, 255, 0.08);
+        --badge-border: rgba(255, 255, 255, 0.14);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        --r: 18px;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+          "Segoe UI Emoji";
+        background: radial-gradient(1200px 600px at 20% 10%, rgba(138, 180, 255, 0.18), transparent 55%),
+          radial-gradient(900px 500px at 80% 20%, rgba(160, 255, 208, 0.12), transparent 55%), var(--bg);
+        color: var(--text);
+      }
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 28px 18px 60px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 26px;
+        letter-spacing: 0.2px;
+      }
+      .subtitle {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.6;
+        max-width: 80ch;
+      }
+      .grid {
+        margin-top: 22px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .card-head {
+        padding: 14px 14px 12px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .card-head .name {
+        font-weight: 700;
+      }
+      .card-head .hint {
+        color: var(--faint);
+        font-size: 12px;
+      }
+      .mock {
+        padding: 14px;
+      }
+      .mock-frame {
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.22);
+        overflow: hidden;
+      }
+      .mock-top {
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .mock-top .title {
+        font-weight: 700;
+        font-size: 13px;
+        color: var(--text);
+      }
+      .mock-top .meta {
+        font-size: 12px;
+        color: var(--faint);
+      }
+      .mock-body {
+        padding: 12px;
+      }
+      .layout-a {
+        display: grid;
+        grid-template-columns: 140px minmax(0, 1fr);
+        gap: 12px;
+      }
+      .layout-b {
+        display: grid;
+        grid-template-columns: 170px minmax(0, 1fr);
+        gap: 12px;
+      }
+      .layout-c {
+        display: grid;
+        grid-template-columns: 160px minmax(0, 1fr);
+        gap: 12px;
+      }
+      .side {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        padding: 10px;
+      }
+      .tabs {
+        display: grid;
+        gap: 8px;
+      }
+      .tab {
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        padding: 10px 10px;
+        font-size: 12px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .tab.active {
+        color: var(--text);
+        border-color: rgba(138, 180, 255, 0.5);
+        background: rgba(138, 180, 255, 0.12);
+      }
+      .tab .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.18);
+      }
+      .tab.active .dot {
+        background: var(--brand);
+      }
+      .group {
+        margin-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        padding-top: 10px;
+        display: grid;
+        gap: 8px;
+      }
+      .group .gtitle {
+        font-size: 11px;
+        color: var(--faint);
+        letter-spacing: 0.08em;
+      }
+      .group .gitem {
+        font-size: 12px;
+        color: var(--muted);
+        padding: 8px 10px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .group .gitem.active {
+        color: var(--text);
+        border-color: rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .main {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        padding: 10px;
+      }
+      .row {
+        padding: 10px 10px;
+        border-radius: 14px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.12);
+        margin-bottom: 10px;
+      }
+      .row:last-child {
+        margin-bottom: 0;
+      }
+      .title-link {
+        font-weight: 700;
+        font-size: 13px;
+        color: var(--text);
+        line-height: 1.35;
+      }
+      .sub {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+      .date {
+        color: var(--faint);
+      }
+      .tags {
+        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .tag {
+        padding: 4px 8px;
+        font-size: 11px;
+        border-radius: 999px;
+        background: var(--badge);
+        border: 1px solid var(--badge-border);
+        color: var(--muted);
+      }
+      .actions {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .btn {
+        font-size: 12px;
+        padding: 8px 10px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .btn.ghost {
+        color: var(--brand);
+        border-color: rgba(138, 180, 255, 0.35);
+        background: rgba(138, 180, 255, 0.08);
+      }
+      .legend {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.65;
+      }
+      .legend b {
+        color: var(--text);
+      }
+      @media (max-width: 1060px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>分卷目录页：布局方案（点击标题默认到指南 + 右侧保留原文按钮）</h1>
+      <p class="subtitle">
+        你要的核心点都在：Tab 左侧、右侧只保留“原文”、每条显示“时间 + 一句话主题 + 5标签”。下面 3 个方案主要差异在左侧信息密度与分组导航方式。
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-head">
+            <div class="name">A｜极简左侧 Tab</div>
+            <div class="hint">左侧只放 Tab；分组仍在右侧内容区</div>
+          </div>
+          <div class="mock">
+            <div class="mock-frame">
+              <div class="mock-top">
+                <div class="title">第一卷 · 中国革命的基本问题与土地革命经验</div>
+                <div class="meta">目录</div>
+              </div>
+              <div class="mock-body">
+                <div class="layout-a">
+                  <div class="side">
+                    <div class="tabs">
+                      <div class="tab active"><span>学习顺序</span><span class="dot"></span></div>
+                      <div class="tab"><span>原书顺序</span><span class="dot"></span></div>
+                    </div>
+                  </div>
+                  <div class="main">
+                    <div class="row">
+                      <div>
+                        <div class="title-link">中国的红色政权为什么能够存在？</div>
+                        <div class="sub">
+                          <span class="date">1928-10-05</span> · 主题：解释“为什么能活下来”，把政治条件、群众基础、武装力量压成一套生存逻辑。
+                        </div>
+                        <div class="tags">
+                          <span class="tag">根据地</span><span class="tag">武装斗争</span><span class="tag">群众基础</span><span class="tag">政权结构</span><span class="tag">生存条件</span>
+                        </div>
+                      </div>
+                      <div class="actions"><span class="btn ghost">原文</span></div>
+                    </div>
+                    <div class="row">
+                      <div>
+                        <div class="title-link">反对本本主义</div>
+                        <div class="sub">
+                          <span class="date">1930-05</span> · 主题：把“调查研究”确立为决策的第一性原则，拒绝用抽象正确替代现实正确。
+                        </div>
+                        <div class="tags">
+                          <span class="tag">调查研究</span><span class="tag">反教条</span><span class="tag">方法论</span><span class="tag">证据链</span><span class="tag">决策</span>
+                        </div>
+                      </div>
+                      <div class="actions"><span class="btn ghost">原文</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="name">B｜左侧 Tab + 分期导航</div>
+            <div class="hint">左侧同时可快速跳到时期分组</div>
+          </div>
+          <div class="mock">
+            <div class="mock-frame">
+              <div class="mock-top">
+                <div class="title">第二卷 · 抗日战争全面展开与统一战线策略（上）</div>
+                <div class="meta">目录</div>
+              </div>
+              <div class="mock-body">
+                <div class="layout-b">
+                  <div class="side">
+                    <div class="tabs">
+                      <div class="tab active"><span>学习顺序</span><span class="dot"></span></div>
+                      <div class="tab"><span>原书顺序</span><span class="dot"></span></div>
+                    </div>
+                    <div class="group">
+                      <div class="gtitle">时期</div>
+                      <div class="gitem active">抗日战争时期（上）</div>
+                      <div class="gitem">（后续扩展）</div>
+                    </div>
+                  </div>
+                  <div class="main">
+                    <div class="row">
+                      <div>
+                        <div class="title-link">论持久战</div>
+                        <div class="sub"><span class="date">1938-05</span> · 主题：在最差条件下建立“可赢”的时间结构，把战略耐心变成组织能力。</div>
+                        <div class="tags">
+                          <span class="tag">持久战</span><span class="tag">战略判断</span><span class="tag">时间结构</span><span class="tag">动员</span><span class="tag">优势转换</span>
+                        </div>
+                      </div>
+                      <div class="actions"><span class="btn ghost">原文</span></div>
+                    </div>
+                    <div class="row">
+                      <div>
+                        <div class="title-link">反对自由主义</div>
+                        <div class="sub"><span class="date">1937-09-07</span> · 主题：把组织内部“软”问题转成可治理的纪律问题，提升执行一致性。</div>
+                        <div class="tags">
+                          <span class="tag">组织纪律</span><span class="tag">执行</span><span class="tag">批评</span><span class="tag">作风</span><span class="tag">治理</span>
+                        </div>
+                      </div>
+                      <div class="actions"><span class="btn ghost">原文</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="name">C｜左侧 Tab + 条目卡片化</div>
+            <div class="hint">右侧更像“知识卡片”，适合未来接知识图谱</div>
+          </div>
+          <div class="mock">
+            <div class="mock-frame">
+              <div class="mock-top">
+                <div class="title">第三卷 · 整风与根据地治理、夺取抗战胜利（下）</div>
+                <div class="meta">目录</div>
+              </div>
+              <div class="mock-body">
+                <div class="layout-c">
+                  <div class="side">
+                    <div class="tabs">
+                      <div class="tab active"><span>学习顺序</span><span class="dot"></span></div>
+                      <div class="tab"><span>原书顺序</span><span class="dot"></span></div>
+                    </div>
+                    <div class="group">
+                      <div class="gtitle">提示</div>
+                      <div class="gitem">卡片更适合放“标签/主题/交叉引用”</div>
+                    </div>
+                  </div>
+                  <div class="main">
+                    <div class="row" style="background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.14)">
+                      <div>
+                        <div class="title-link">改造我们的学习</div>
+                        <div class="sub">
+                          <span class="date">1941-05-19</span> · 主题：把学习变成组织升级工程——从“背材料”转向“解决问题的知识生产”。
+                        </div>
+                        <div class="tags">
+                          <span class="tag">学习方法</span><span class="tag">整风</span><span class="tag">问题导向</span><span class="tag">组织能力</span><span class="tag">知识生产</span>
+                        </div>
+                      </div>
+                      <div class="actions"><span class="btn ghost">原文</span></div>
+                    </div>
+                    <div class="row" style="background: rgba(0, 0, 0, 0.08)">
+                      <div>
+                        <div class="title-link">关于领导方法的若干问题</div>
+                        <div class="sub">
+                          <span class="date">1943-06-01</span> · 主题：把“从群众中来、到群众中去”变成一套可复用的领导闭环与工作流程。
+                        </div>
+                        <div class="tags">
+                          <span class="tag">领导方法</span><span class="tag">群众路线</span><span class="tag">闭环</span><span class="tag">工作方法</span><span class="tag">组织治理</span>
+                        </div>
+                      </div>
+                      <div class="actions"><span class="btn ghost">原文</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <b>你只需要回复：</b>选 A / B / C。<br />
+        如果你想混合：比如“用 B 的左侧（Tab + 分期），但右侧用 C 的卡片密度”，也可以直接说。
+      </div>
+    </div>
+  </body>
+</html>
+
