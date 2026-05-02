@@ -6,6 +6,9 @@
 - 点击某一卷进入新页面 `/study/volume/<volume>`（`v1`/`v2`/`v3`/`v4`），展示该卷目录（分时期/分组），并为每篇文章同时提供两个入口：指南 / 原文。
   - 若站内存在对应 `mx-v*-***`：指南链接到 `/study/<id>`；原文链接到 `/original/<id>`。
   - 若站内不存在：指南与原文都外链到 Marxists 原文页（同一链接）。
+- 每个分卷目录页提供两种目录结构，可通过 Tab 切换：
+  - 学习顺序
+  - 原书顺序
 
 ---
 
@@ -43,11 +46,17 @@
 - 页面标题：`毛选·第X卷`
 - 内容结构：
   - 顶部显示该卷年代范围 + 主题一句话 + 导读段落 + 要点列表
-  - 下方为“目录”，按分组（时期）展示：
-    - 分组标题（例如“第一次国内革命战争时期”）
-    - 每篇文章一行：`标题` + 两个入口按钮/链接：`指南`、`原文`
-      - 站内可用 → 站内
-      - 站内不可用 → 外链（两入口同一外链）
+  - 下方为“目录”，提供 Tab 切换：
+    - Tab 1：学习顺序
+      - 展示方式：按列表（不分组）展示本卷条目
+      - 数据来源：
+        - `v1`：从 `content/maoxuan-cos/index.json` 的 `learningOrder` 中筛出属于 `v1` 的 id，作为学习顺序目录
+        - `v2`/`v3`/`v4`：暂以“原书顺序”作为默认学习顺序（后续如果形成站内学习顺序，再单独配置）
+    - Tab 2：原书顺序
+      - 展示方式：按分组（时期）展示（例如“第一次国内革命战争时期”）
+  - 每篇文章一行：`标题` + 两个入口按钮/链接：`指南`、`原文`
+    - 站内可用 → 站内
+    - 站内不可用 → 外链（两入口同一外链）
 
 ---
 
@@ -66,7 +75,7 @@
   - `theme: string`（一句话主题）
   - `intro: string`（导读段落）
   - `bullets: string[]`
-  - `groups: Array<{`
+  - `bookGroups: Array<{`
     - `title: string`
     - `items: Array<{`
       - `title: string`
@@ -75,6 +84,11 @@
     - `}>`
   - `}>`
 - `}`
+
+学习顺序目录的数据结构：
+
+- 不在 `volumes.ts` 中单独维护 `v1` 的学习顺序：直接读取 `index.json` 的 `learningOrder` 并映射到条目。
+- `v2`/`v3`/`v4` 的“学习顺序”暂不单独配置：默认等同于原书顺序（将 `bookGroups` 展平为一个列表）。
 
 链接规则：
 
@@ -90,7 +104,11 @@
 ## Implementation Notes
 
 - `/study` 页面目前仅展示学习顺序与已收录列表（`src/app/study/page.tsx`）。
-- 新增分卷页：`src/app/study/volume/[volume]/page.tsx`，从 `volumes.ts` 读取数据渲染。
+- 新增分卷页：`src/app/study/volume/[volume]/page.tsx`，从 `volumes.ts` 与 `content/maoxuan-cos/index.json` 组合渲染：
+  - “原书顺序”Tab：渲染 `bookGroups`
+  - “学习顺序”Tab：
+    - `v1`：用 `learningOrder` 过滤并映射 `v1.items`
+    - `v2`/`v3`/`v4`：使用 `bookGroups` 展平后的列表
 - 目录页无需依赖 `content/maoxuan-cos/index.json` 来推断第二～四卷；第一卷也以 `volumes.ts` 提供分组目录为准（其中条目可标注站内 `id`，便于未来拓展）。
 
 ---
@@ -99,9 +117,12 @@
 
 - `/study` 页面出现四卷导读卡片区，可点击进入四个分卷目录页。
 - `/study/volume/v1`～`/study/volume/v4` 均可访问：
-  - 有分组目录
+  - 有 Tab：学习顺序 / 原书顺序
+  - 原书顺序 Tab：有分组目录
+  - 学习顺序 Tab：
+    - `v1` 按站内 `learningOrder` 展示
+    - `v2`/`v3`/`v4` 暂按原书顺序展平展示
   - 每篇条目提供“指南 / 原文”两个入口
   - 第一卷条目链接指向站内 `/study/mx-v1-xxx` 与 `/original/mx-v1-xxx`
   - 第二～四卷条目链接为外链（指南/原文同一外链）
 - `npm run lint && npm run build` 通过。
-
