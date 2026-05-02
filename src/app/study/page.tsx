@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getStudyIndex } from '@/lib/study/index';
+import { VOLUMES } from '@/lib/study/volumes';
 
 export const metadata = { title: '研读系统 | 毛选生存系统' };
 
@@ -25,6 +26,40 @@ export default function StudyPage() {
           按学习顺序逐篇推进：先建认知地图，再做逐段精读与当代映射。
         </p>
       </header>
+
+      <section className="wx-surface rounded-2xl p-6 mb-6">
+        <h2 className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
+          毛选四卷导读
+        </h2>
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {VOLUMES.map((v) => (
+            <div key={v.volume} className="rounded-2xl p-5" style={{ border: '1px solid var(--wx-panel-border)' }}>
+              <div className="text-xs" style={{ color: 'var(--wx-ink-faint)' }}>
+                {v.range}
+              </div>
+              <div className="mt-1 text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
+                {v.label}
+              </div>
+              <div className="mt-1 text-sm" style={{ color: 'var(--wx-ink-soft)' }}>
+                {v.theme}
+              </div>
+              <p className="mt-3 text-sm" style={{ color: 'var(--wx-ink)' }}>
+                {v.intro}
+              </p>
+              <ul className="mt-3 space-y-1 text-sm" style={{ color: 'var(--wx-ink-soft)' }}>
+                {v.bullets.map((b) => (
+                  <li key={b}>◆{b}</li>
+                ))}
+              </ul>
+              <div className="mt-4">
+                <Link href={`/study/volume/${v.volume}`} className="text-sm hover:underline" style={{ color: 'var(--wx-brand)' }}>
+                  查看目录 →
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section className="wx-surface rounded-2xl p-6">
         <h2 className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
