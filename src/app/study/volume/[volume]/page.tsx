@@ -77,6 +77,12 @@ function getOriginalHref(id: string, sourceUrl: string) {
   return `/original/${id}`;
 }
 
+function truncateText(text: string, maxLen: number) {
+  const s = text.trim();
+  if (s.length <= maxLen) return s;
+  return `${s.slice(0, maxLen)}…`;
+}
+
 function renderItem(it: EnrichedBookItem) {
   const guideHref = `/study/${it.id}`;
   const originalHref = getOriginalHref(it.id, it.source_url);
@@ -93,7 +99,7 @@ function renderItem(it: EnrichedBookItem) {
         <div className="mt-1 text-sm" style={{ color: 'var(--wx-ink-soft)' }}>
           <span style={{ color: 'var(--wx-ink-faint)' }}>{it.date}</span>
           <span> · </span>
-          <span>{it.topic}</span>
+          <span>{truncateText(it.topic, 42)}</span>
         </div>
         <div className="mt-2 flex flex-wrap gap-2">
           {it.tags.map((t) => (
