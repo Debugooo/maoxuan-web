@@ -13,6 +13,19 @@
           "original_path": "content/maoxuan-original/v1/mx-v1-001.md",
           "cos": { "stage": 1, "module": "kernel" },
           "prev_learning": null,
+          "next_learning": "mx-v1-002",
+          "cross_refs": [],
+          "concepts": []
+        },
+        {
+          "id": "mx-v1-002",
+          "volume": "v1",
+          "title": "湖南农民运动考察报告",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-192703.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-002.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-002.md",
+          "cos": { "stage": 2, "module": "evidence" },
+          "prev_learning": "mx-v1-001",
           "next_learning": null,
           "cross_refs": [],
           "concepts": []
@@ -49,6 +62,6 @@
     "v3": { "label": "第三卷", "items": [] },
     "v4": { "label": "第四卷", "items": [] }
   },
-  "learningOrder": ["mx-v1-001"],
+  "learningOrder": ["mx-v1-001", "mx-v1-002"],
   "concepts": []
 }
