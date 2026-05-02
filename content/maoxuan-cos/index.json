@@ -143,6 +143,19 @@
           "original_path": "content/maoxuan-original/v1/mx-v1-011.md",
           "cos": { "stage": 4, "module": "methods" },
           "prev_learning": "mx-v1-010",
+          "next_learning": "mx-v1-012",
+          "cross_refs": [],
+          "concepts": []
+        },
+        {
+          "id": "mx-v1-012",
+          "volume": "v1",
+          "title": "论反对日本帝国主义的策略",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19351227.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-012.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-012.md",
+          "cos": { "stage": 5, "module": "unitedfront" },
+          "prev_learning": "mx-v1-011",
           "next_learning": null,
           "cross_refs": [],
           "concepts": []
@@ -179,6 +192,6 @@
     "v3": { "label": "第三卷", "items": [] },
     "v4": { "label": "第四卷", "items": [] }
   },
-  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004", "mx-v1-005", "mx-v1-006", "mx-v1-007", "mx-v1-008", "mx-v1-009", "mx-v1-010", "mx-v1-011"],
+  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004", "mx-v1-005", "mx-v1-006", "mx-v1-007", "mx-v1-008", "mx-v1-009", "mx-v1-010", "mx-v1-011", "mx-v1-012"],
   "concepts": []
 }
