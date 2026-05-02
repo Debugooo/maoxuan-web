@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getStudyGuideById, getStudyOriginalById } from '@/lib/study/content';
+import { getBookItemById } from '@/lib/study/volumes';
 import { slugifyHeading } from '@/lib/maoxuan/slug';
 
 function stripHeadingNumber(text: string) {
@@ -77,7 +78,58 @@ function extractHighlightsMap(original: string) {
 
 export default function StudyGuidePage({ params }: { params: { id: string } }) {
   const doc = getStudyGuideById(params.id);
-  if (!doc) notFound();
+  if (!doc) {
+    const hit = getBookItemById(params.id);
+    if (!hit) notFound();
+    return (
+      <main className="max-w-6xl mx-auto px-4 py-10">
+        <div className="mb-6 flex items-center justify-between">
+          <Link href="/study" className="text-sm hover:underline" style={{ color: 'var(--wx-ink-soft)' }}>
+            ← 返回研读系统
+          </Link>
+          <a href={hit.item.source_url} target="_blank" rel="noreferrer" className="text-sm hover:underline" style={{ color: 'var(--wx-brand)' }}>
+            查看原文 →
+          </a>
+        </div>
+
+        <header className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-serif font-bold" style={{ color: 'var(--wx-ink)' }}>
+            {hit.item.title}
+          </h1>
+          <div className="mt-2 text-sm" style={{ color: 'var(--wx-ink-soft)' }}>
+            <span style={{ color: 'var(--wx-ink-faint)' }}>{hit.item.date}</span>
+            <span> · </span>
+            <span>{hit.guide.label}</span>
+          </div>
+        </header>
+
+        <section className="wx-surface rounded-2xl p-6">
+          <h2 className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
+            一句话主题
+          </h2>
+          <p className="mt-3 text-sm" style={{ color: 'var(--wx-ink)' }}>
+            {hit.item.topic}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {hit.item.tags.map((t) => (
+              <span
+                key={`${hit.item.id}-${t}`}
+                className="text-xs px-2 py-1 rounded-full"
+                style={{ border: '1px solid var(--wx-panel-border)', color: 'var(--wx-ink-soft)', background: 'rgba(255,255,255,0.02)' }}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+          <div className="mt-5">
+            <a href={hit.item.source_url} target="_blank" rel="noreferrer" className="text-sm hover:underline" style={{ color: 'var(--wx-brand)' }}>
+              打开原文 →
+            </a>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   const original = getStudyOriginalById(params.id);
   const highlightMap = original ? extractHighlightsMap(original.content) : new Map<string, string>();

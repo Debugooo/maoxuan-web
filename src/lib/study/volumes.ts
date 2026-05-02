@@ -1,9 +1,13 @@
 import type { VolumeId } from '@/lib/study/types';
+import { slugifyHeading } from '@/lib/maoxuan/slug';
 
 export type BookItem = {
   title: string;
   id?: string;
   source_url: string;
+  date?: string;
+  topic?: string;
+  tags?: string[];
 };
 
 export type BookGroup = {
@@ -21,15 +25,122 @@ export type VolumeGuide = {
   bookGroups: BookGroup[];
 };
 
+function hashString(input: string) {
+  let h = 5381;
+  for (let i = 0; i < input.length; i += 1) h = (h * 33) ^ input.charCodeAt(i);
+  return (h >>> 0).toString(16).slice(0, 8);
+}
+
+function extractDateToken(url: string) {
+  const m = url.match(/maoxedong\/marxist\.org-chinese-mao-(\d{8}|\d{6}|\d{4})/);
+  if (m) return m[1];
+  const n = url.match(/maoxedong\/marxist\.org-chinese-mao-(\d{6})(?:[a-z])?\.htm/i);
+  if (n) return n[1];
+  return null;
+}
+
+function formatDate(token: string | null) {
+  if (!token) return '未知';
+  if (token.length === 8) return `${token.slice(0, 4)}-${token.slice(4, 6)}-${token.slice(6, 8)}`;
+  if (token.length === 6) return `${token.slice(0, 4)}-${token.slice(4, 6)}`;
+  if (token.length === 4) return token;
+  return token;
+}
+
+function inferTopic(title: string) {
+  const t = title.trim();
+  if (t.startsWith('论')) return `围绕“${t.replace(/^论/, '')}”给出可执行的判断与方法框架。`;
+  if (t.includes('谈话')) return '以对话方式提炼形势判断与策略要点，便于快速传达与统一口径。';
+  if (t.includes('声明')) return '在关键节点发出政治信号，明确立场、底线与行动方向。';
+  if (t.includes('命令')) return '把战略意图压成行动指令与组织要求，确保执行一致。';
+  if (t.includes('报告')) return '集中回答中心问题，并给出可落地的路线、步骤与抓手。';
+  if (t.includes('发刊词')) return '为组织与舆论阵地设定路线、任务与工作标准。';
+  if (t.includes('纪念')) return '以人物为范式，提炼可执行的作风与价值标准。';
+  if (t.includes('通知')) return '面向组织系统发布统一口径与工作部署，减少误解与内耗。';
+  return '提炼本篇要解决的中心矛盾，并给出可复用的工作方法。';
+}
+
+const DEFAULT_TAGS: Record<VolumeId, string[]> = {
+  v1: ['阶级分析', '根据地', '群众路线', '组织建设', '方法论'],
+  v2: ['抗日战争', '统一战线', '战略判断', '政治动员', '建党'],
+  v3: ['整风', '根据地治理', '学习方法', '领导方法', '政策'],
+  v4: ['解放战争', '土地改革', '政权建设', '战略', '建国'],
+};
+
+const KEYWORD_TAGS: Array<[RegExp, string]> = [
+  [/持久战|游击|战略/,'战略'],
+  [/统一战线|合作|团结|国共/,'统一战线'],
+  [/经济|财政|生产|减租|工商业/,'经济财政'],
+  [/土地|农村|农民|阶级/,'土地与阶级'],
+  [/学习|调查/,'学习与调查'],
+  [/自由主义|纪律|作风/,'纪律作风'],
+  [/宪政|民主|政府|政权/,'政权与民主'],
+  [/国际|苏联|美国|英国/,'国际形势'],
+  [/宣传|日报|发刊词/,'舆论与宣传'],
+  [/军|战争|作战|战役/,'军事'],
+];
+
+function inferTags(volume: VolumeId, title: string) {
+  const picked: string[] = [];
+  for (const [re, tag] of KEYWORD_TAGS) {
+    if (re.test(title) && !picked.includes(tag)) picked.push(tag);
+    if (picked.length >= 5) break;
+  }
+  for (const tag of DEFAULT_TAGS[volume]) {
+    if (picked.length >= 5) break;
+    if (!picked.includes(tag)) picked.push(tag);
+  }
+  while (picked.length < 5) picked.push('方法');
+  return picked.slice(0, 5);
+}
+
+export function computeBookItemId(volume: VolumeId, it: BookItem) {
+  if (it.id) return it.id;
+  const token = extractDateToken(it.source_url);
+  const datePart = token ? formatDate(token).replaceAll('-', '') : 'unknown';
+  const slug = slugifyHeading(it.title).slice(0, 18) || 'item';
+  const h = hashString(`${volume}|${it.source_url}|${it.title}`);
+  return `mx-${volume}-${datePart}-${h}-${slug}`;
+}
+
+export type EnrichedBookItem = {
+  id: string;
+  title: string;
+  source_url: string;
+  date: string;
+  topic: string;
+  tags: [string, string, string, string, string];
+};
+
+export function enrichBookItem(volume: VolumeId, it: BookItem): EnrichedBookItem {
+  const id = computeBookItemId(volume, it);
+  const date = it.date ?? formatDate(extractDateToken(it.source_url));
+  const topic = it.topic ?? inferTopic(it.title);
+  const tags = (it.tags ?? inferTags(volume, it.title)).slice(0, 5) as [string, string, string, string, string];
+  return { id, title: it.title, source_url: it.source_url, date, topic, tags };
+}
+
+export function getBookItemById(id: string) {
+  for (const v of VOLUMES) {
+    for (const g of v.bookGroups) {
+      for (const it of g.items) {
+        const full = enrichBookItem(v.volume, it);
+        if (full.id === id) return { volume: v.volume, guide: v, groupTitle: g.title, item: full };
+      }
+    }
+  }
+  return null;
+}
+
 export const VOLUMES: VolumeGuide[] = [
   {
     volume: 'v1',
     range: '1925–1937',
     label: '第一卷',
-    theme: '中国革命的基本问题与土地革命经验',
+    theme: '从阶级与农民问题出发，建立革命道路、根据地建设与方法论的底层框架。',
     intro:
-      '第一卷主要收入第一次国内革命战争和土地革命战争时期的重要著作，围绕中国社会阶级结构、农民运动、革命道路、根据地建设、军事斗争和思想方法展开。它展示了毛泽东对中国革命对象、动力、领导力量和道路选择的早期系统思考。',
-    bullets: ['阶级分析与革命对象', '农民运动与群众力量', '农村根据地与武装斗争', '实践论、矛盾论等哲学方法'],
+      '这一卷把“革命到底怎么落地”讲清楚：先用阶级分析找对象与同盟，再用农民运动与根据地建设把力量组织起来，最后以军事斗争与两篇哲学方法论把“从实际出发、具体分析”固化为工作纪律。',
+    bullets: ['用阶级分析锁定对象、动力与同盟军', '把群众动员转成组织与政权的可执行结构', '在敌强我弱中建立根据地与武装斗争的生存法则', '用实践论/矛盾论把方法论升级为分析与决策算法'],
     bookGroups: [
       {
         title: '第一次国内革命战争时期',
@@ -137,10 +248,10 @@ export const VOLUMES: VolumeGuide[] = [
     volume: 'v2',
     range: '1937–1941',
     label: '第二卷',
-    theme: '抗日战争全面展开与统一战线策略（上）',
+    theme: '在全面抗战中同时回答“怎么打、怎么团结、怎么建党”的一体化路线。',
     intro:
-      '第二卷集中呈现抗战全面爆发后，党在战争形势判断、游击战争与持久战战略、统一战线中的独立自主、政治动员与组织建设等方面的系统部署。它把“如何打”“如何团结”“如何建党”三条线压成一条可执行的路线图。',
-    bullets: ['抗战形势判断与总方针', '游击战争与持久战战略', '统一战线中的独立自主', '新民主主义政治与社会动员'],
+      '这一卷的主任务是把战争形势判断转成组织行动：既要提出持久战与游击战的战略结构，又要在统一战线中坚持独立自主，同时完成政治动员、干部队伍与舆论阵地的系统建设。',
+    bullets: ['形成对战争形势的统一判断与总方针', '把持久战/游击战转成可执行的战略结构', '在统一战线中守住独立自主与主动权', '用动员与组织建设把战略变成社会能力'],
     bookGroups: [
       {
         title: '抗日战争时期（上）',
@@ -193,10 +304,10 @@ export const VOLUMES: VolumeGuide[] = [
     volume: 'v3',
     range: '1941–1945',
     label: '第三卷',
-    theme: '整风与根据地治理、夺取抗战胜利（下）',
+    theme: '用整风把组织“升级换代”，并把根据地治理变成可复制的制度能力。',
     intro:
-      '第三卷聚焦抗战相持阶段与反攻前夕的组织整风、学习方法、经济财政、领导方法与群众动员，并延伸到战后政治格局的总判断。它把“如何学习、如何领导、如何治理根据地、如何准备胜利”连成一个系统。',
-    bullets: ['整风：改造学习与反对党八股', '根据地治理：经济财政与政策', '领导方法：组织起来与为人民服务', '战后方针：两个中国之命运与联合政府'],
+      '这一卷聚焦“内部建设”：通过改造学习、整顿作风、反对党八股，解决组织的认知与纪律问题；同时处理经济财政、政策执行与领导方法，把根据地治理做成稳定运转的系统，并对战后格局给出总判断。',
+    bullets: ['整风先整“认知系统”：学风、文风、作风一体纠偏', '把根据地治理拆成经济财政与政策执行的制度链条', '用领导方法与群众路线提高组织动员与纠错速度', '在胜利前夜给出战后格局的总判断与政治方案'],
     bookGroups: [
       {
         title: '抗日战争时期（下）',
@@ -240,10 +351,10 @@ export const VOLUMES: VolumeGuide[] = [
     volume: 'v4',
     range: '1945–1949',
     label: '第四卷',
-    theme: '解放战争与夺取全国政权的战略与政治',
+    theme: '在解放战争的全局对抗中，完成从战争胜利到政权转换的全套方法。',
     intro:
-      '第四卷覆盖抗战胜利到新中国成立前夕的全局判断与战争指导：从和平谈判到粉碎内战进攻，从建立巩固根据地到集中优势兵力歼敌，从土地改革到党委工作方法与人民民主专政。它展示了在大规模对抗中如何掌握主动权并完成政权转换。',
-    bullets: ['战后方针与和平谈判', '解放战争战略：集中优势兵力与各个歼灭', '土地改革与新解放区治理', '夺取全国政权与建国纲领'],
+      '这一卷把“夺取全国政权”拆成可执行序列：战后方针与谈判策略、粉碎内战进攻的军事原则、土地改革与新解放区治理、党委工作方法与建国纲领，最终把胜利转化为新的国家能力与政治秩序。',
+    bullets: ['用全局判断掌握主动权：谈判与斗争并行', '以集中优势兵力等原则打出战略决定性胜利', '用土地改革与治理把根据地扩展成全国秩序', '以党委工作方法与建国纲领完成政权转换'],
     bookGroups: [
       {
         title: '第三次国内革命战争时期',
@@ -333,4 +444,3 @@ export function flattenBookGroups(groups: BookGroup[]) {
   for (const g of groups) out.push(...g.items);
   return out;
 }
-

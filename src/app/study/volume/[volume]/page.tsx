@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { getStudyIndex } from '@/lib/study/index';
-import type { StudyItem } from '@/lib/study/types';
-import { flattenBookGroups, getVolumeGuide } from '@/lib/study/volumes';
+import { getStudyIndex, getStudyItemById } from '@/lib/study/index';
+import type { VolumeId } from '@/lib/study/types';
+import type { EnrichedBookItem } from '@/lib/study/volumes';
+import { enrichBookItem, flattenBookGroups, getVolumeGuide } from '@/lib/study/volumes';
 
 export const metadata = { title: '分卷目录 | 毛选生存系统' };
 
@@ -11,40 +12,106 @@ function isExternal(href: string) {
   return href.startsWith('http://') || href.startsWith('https://');
 }
 
-function GuideLink({ href, children }: { href: string; children: ReactNode }) {
+function ActionLink({ href, children }: { href: string; children: ReactNode }) {
   if (isExternal(href)) {
     return (
-      <a href={href} target="_blank" rel="noreferrer" className="text-sm hover:underline" style={{ color: 'var(--wx-brand)' }}>
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="text-sm px-3 py-2 rounded-xl whitespace-nowrap"
+        style={{
+          color: 'var(--wx-brand)',
+          border: '1px solid var(--wx-panel-border)',
+          background: 'rgba(201, 100, 66, 0.04)',
+        }}
+      >
         {children}
       </a>
     );
   }
   return (
-    <Link href={href} className="text-sm hover:underline" style={{ color: 'var(--wx-brand)' }}>
+    <Link
+      href={href}
+      className="text-sm px-3 py-2 rounded-xl whitespace-nowrap"
+      style={{
+        color: 'var(--wx-brand)',
+        border: '1px solid var(--wx-panel-border)',
+        background: 'rgba(201, 100, 66, 0.04)',
+      }}
+    >
       {children}
     </Link>
   );
 }
 
-function getLearningItems(volume: string) {
+function buildItemMap(volume: VolumeId) {
+  const v = getVolumeGuide(volume);
+  const map = new Map<string, EnrichedBookItem>();
+  if (!v) return map;
+  for (const g of v.bookGroups) {
+    for (const it of g.items) {
+      const full = enrichBookItem(volume, it);
+      map.set(full.id, full);
+    }
+  }
+  return map;
+}
+
+function getLearningItems(volume: VolumeId) {
   const v = getVolumeGuide(volume);
   if (!v) return [];
 
-  if (volume !== 'v1') return flattenBookGroups(v.bookGroups);
+  const map = buildItemMap(volume);
+
+  if (volume !== 'v1') return flattenBookGroups(v.bookGroups).map((it) => enrichBookItem(volume, it));
 
   const index = getStudyIndex();
-  const byId = new Map<string, StudyItem>();
-  index.volumes.v1.items.forEach((it) => byId.set(it.id, it));
+  const ids = index.learningOrder.filter((id) => id.startsWith('mx-v1-'));
+  return ids.map((id) => map.get(id)).filter(Boolean) as EnrichedBookItem[];
+}
 
-  const ids = index.learningOrder.filter((id) => {
-    const it = byId.get(id);
-    return Boolean(it && it.volume === 'v1');
-  });
+function getOriginalHref(id: string, sourceUrl: string) {
+  const it = getStudyItemById(id);
+  if (!it) return sourceUrl;
+  return `/original/${id}`;
+}
 
-  return ids
-    .map((id) => byId.get(id))
-    .filter(Boolean)
-    .map((it) => ({ id: it!.id, title: it!.title, source_url: it!.source_url }));
+function renderItem(it: EnrichedBookItem) {
+  const guideHref = `/study/${it.id}`;
+  const originalHref = getOriginalHref(it.id, it.source_url);
+  return (
+    <li
+      key={it.id}
+      className="rounded-2xl px-4 py-3 flex items-start justify-between gap-4"
+      style={{ border: '1px solid var(--wx-panel-border)', background: 'rgba(255,255,255,0.02)' }}
+    >
+      <div className="min-w-0">
+        <Link href={guideHref} className="font-semibold hover:underline" style={{ color: 'var(--wx-ink)' }}>
+          {it.title}
+        </Link>
+        <div className="mt-1 text-sm" style={{ color: 'var(--wx-ink-soft)' }}>
+          <span style={{ color: 'var(--wx-ink-faint)' }}>{it.date}</span>
+          <span> · </span>
+          <span>{it.topic}</span>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {it.tags.map((t) => (
+            <span
+              key={`${it.id}-${t}`}
+              className="text-xs px-2 py-1 rounded-full"
+              style={{ border: '1px solid var(--wx-panel-border)', color: 'var(--wx-ink-soft)', background: 'rgba(255,255,255,0.02)' }}
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="shrink-0">
+        <ActionLink href={originalHref}>原文</ActionLink>
+      </div>
+    </li>
+  );
 }
 
 export default function StudyVolumePage({
@@ -54,7 +121,7 @@ export default function StudyVolumePage({
   params: { volume: string };
   searchParams?: { tab?: string };
 }) {
-  const volume = params.volume;
+  const volume = params.volume as VolumeId;
   const v = getVolumeGuide(volume);
   if (!v) notFound();
 
@@ -90,22 +157,33 @@ export default function StudyVolumePage({
       </header>
 
       <section className="wx-surface rounded-2xl p-6 mt-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
           <h2 className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
             目录
           </h2>
-          <div className="flex items-center gap-3 text-sm">
+          <div
+            className="flex items-center gap-1 p-1 rounded-full"
+            style={{ border: '1px solid var(--wx-panel-border)', background: 'rgba(255,255,255,0.02)' }}
+          >
             <Link
               href={`/study/volume/${volume}?tab=learning`}
-              className="hover:underline"
-              style={{ color: tab === 'learning' ? 'var(--wx-ink)' : 'var(--wx-ink-soft)' }}
+              className="text-sm px-3 py-1.5 rounded-full"
+              style={{
+                color: tab === 'learning' ? 'var(--wx-ink)' : 'var(--wx-ink-soft)',
+                border: tab === 'learning' ? '1px solid rgba(201, 100, 66, 0.35)' : '1px solid transparent',
+                background: tab === 'learning' ? 'rgba(201, 100, 66, 0.06)' : 'transparent',
+              }}
             >
               学习顺序
             </Link>
             <Link
               href={`/study/volume/${volume}?tab=book`}
-              className="hover:underline"
-              style={{ color: tab === 'book' ? 'var(--wx-ink)' : 'var(--wx-ink-soft)' }}
+              className="text-sm px-3 py-1.5 rounded-full"
+              style={{
+                color: tab === 'book' ? 'var(--wx-ink)' : 'var(--wx-ink-soft)',
+                border: tab === 'book' ? '1px solid rgba(201, 100, 66, 0.35)' : '1px solid transparent',
+                background: tab === 'book' ? 'rgba(201, 100, 66, 0.06)' : 'transparent',
+              }}
             >
               原书顺序
             </Link>
@@ -113,20 +191,8 @@ export default function StudyVolumePage({
         </div>
 
         {tab === 'learning' ? (
-          <ul className="mt-4 space-y-2">
-            {learningItems.map((it) => {
-              const guideHref = it.id ? `/study/${it.id}` : it.source_url;
-              const originalHref = it.id ? `/original/${it.id}` : it.source_url;
-              return (
-                <li key={`${it.title}-${it.source_url}`} className="flex items-start justify-between gap-4">
-                  <div style={{ color: 'var(--wx-ink)' }}>{it.title}</div>
-                  <div className="flex items-center gap-3 whitespace-nowrap">
-                    <GuideLink href={guideHref}>指南</GuideLink>
-                    <GuideLink href={originalHref}>原文</GuideLink>
-                  </div>
-                </li>
-              );
-            })}
+          <ul className="mt-4 space-y-3">
+            {learningItems.map((it) => renderItem(it))}
           </ul>
         ) : (
           <div className="mt-4 space-y-6">
@@ -135,20 +201,8 @@ export default function StudyVolumePage({
                 <h3 className="text-sm font-bold" style={{ color: 'var(--wx-ink)' }}>
                   {g.title}
                 </h3>
-                <ul className="mt-3 space-y-2">
-                  {g.items.map((it) => {
-                    const guideHref = it.id ? `/study/${it.id}` : it.source_url;
-                    const originalHref = it.id ? `/original/${it.id}` : it.source_url;
-                    return (
-                      <li key={`${g.title}-${it.title}`} className="flex items-start justify-between gap-4">
-                        <div style={{ color: 'var(--wx-ink)' }}>{it.title}</div>
-                        <div className="flex items-center gap-3 whitespace-nowrap">
-                          <GuideLink href={guideHref}>指南</GuideLink>
-                          <GuideLink href={originalHref}>原文</GuideLink>
-                        </div>
-                      </li>
-                    );
-                  })}
+                <ul className="mt-3 space-y-3">
+                  {g.items.map((raw) => renderItem(enrichBookItem(volume, raw)))}
                 </ul>
               </section>
             ))}
