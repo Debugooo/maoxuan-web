@@ -195,7 +195,20 @@
           "original_path": "content/maoxuan-original/v1/mx-v1-015.md",
           "cos": { "stage": 5, "module": "leadership" },
           "prev_learning": "mx-v1-014",
-          "next_learning": null,
+          "next_learning": "mx-v1-016",
+          "cross_refs": [],
+          "concepts": []
+        },
+        {
+          "id": "mx-v1-016",
+          "volume": "v1",
+          "title": "为争取千百万群众进入抗日民族统一战线而斗争",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19370508.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-016.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-016.md",
+          "cos": { "stage": 5, "module": "unitedfront" },
+          "prev_learning": "mx-v1-015",
+          "next_learning": "mx-v1-017",
           "cross_refs": [],
           "concepts": []
         },
@@ -207,8 +220,8 @@
           "guide_path": "content/maoxuan-guides/v1/mx-v1-017.md",
           "original_path": "content/maoxuan-original/v1/mx-v1-017.md",
           "cos": { "stage": 1, "module": "kernel" },
-          "prev_learning": null,
-          "next_learning": null,
+          "prev_learning": "mx-v1-016",
+          "next_learning": "mx-v1-018",
           "cross_refs": [],
           "concepts": []
         },
@@ -231,6 +244,6 @@
     "v3": { "label": "第三卷", "items": [] },
     "v4": { "label": "第四卷", "items": [] }
   },
-  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004", "mx-v1-005", "mx-v1-006", "mx-v1-007", "mx-v1-008", "mx-v1-009", "mx-v1-010", "mx-v1-011", "mx-v1-012", "mx-v1-013", "mx-v1-014", "mx-v1-015"],
+  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004", "mx-v1-005", "mx-v1-006", "mx-v1-007", "mx-v1-008", "mx-v1-009", "mx-v1-010", "mx-v1-011", "mx-v1-012", "mx-v1-013", "mx-v1-014", "mx-v1-015", "mx-v1-016", "mx-v1-017", "mx-v1-018"],
   "concepts": []
 }
