@@ -91,6 +91,19 @@
           "original_path": "content/maoxuan-original/v1/mx-v1-007.md",
           "cos": { "stage": 4, "module": "discipline" },
           "prev_learning": "mx-v1-006",
+          "next_learning": "mx-v1-008",
+          "cross_refs": [],
+          "concepts": []
+        },
+        {
+          "id": "mx-v1-008",
+          "volume": "v1",
+          "title": "必须注意经济工作",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19330812.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-008.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-008.md",
+          "cos": { "stage": 4, "module": "economy" },
+          "prev_learning": "mx-v1-007",
           "next_learning": null,
           "cross_refs": [],
           "concepts": []
@@ -127,6 +140,6 @@
     "v3": { "label": "第三卷", "items": [] },
     "v4": { "label": "第四卷", "items": [] }
   },
-  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004", "mx-v1-005", "mx-v1-006", "mx-v1-007"],
+  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004", "mx-v1-005", "mx-v1-006", "mx-v1-007", "mx-v1-008"],
   "concepts": []
 }
