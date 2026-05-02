@@ -26,6 +26,19 @@
           "original_path": "content/maoxuan-original/v1/mx-v1-002.md",
           "cos": { "stage": 2, "module": "evidence" },
           "prev_learning": "mx-v1-001",
+          "next_learning": "mx-v1-003",
+          "cross_refs": [],
+          "concepts": []
+        },
+        {
+          "id": "mx-v1-003",
+          "volume": "v1",
+          "title": "中国的红色政权为什么能够存在？",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19281005.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-003.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-003.md",
+          "cos": { "stage": 3, "module": "base" },
+          "prev_learning": "mx-v1-002",
           "next_learning": null,
           "cross_refs": [],
           "concepts": []
@@ -62,6 +75,6 @@
     "v3": { "label": "第三卷", "items": [] },
     "v4": { "label": "第四卷", "items": [] }
   },
-  "learningOrder": ["mx-v1-001", "mx-v1-002"],
+  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003"],
   "concepts": []
 }
