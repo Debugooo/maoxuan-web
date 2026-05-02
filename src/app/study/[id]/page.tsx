@@ -48,6 +48,19 @@ function extractNoteCode(children: unknown) {
   return m ? `H${m[1]}` : null;
 }
 
+function stripNotePrefix(children: unknown) {
+  if (!Array.isArray(children)) {
+    const s = String(children);
+    return s.replace(/^H\d{2}：\s*/, '');
+  }
+
+  const out = [...children];
+  if (out.length && typeof out[0] === 'string') {
+    out[0] = out[0].replace(/^H\d{2}：\s*/, '');
+  }
+  return out;
+}
+
 function extractHighlightsMap(original: string) {
   const map = new Map<string, string>();
   const re = /==([^=]+)==/g;
@@ -148,10 +161,10 @@ export default function StudyGuidePage({ params }: { params: { id: string } }) {
                                   whiteSpace: 'pre-wrap',
                                 }}
                               >
-                                {excerpt}
+                                {`〔${code}〕${excerpt}`}
                               </div>
                             ) : null}
-                            <div>{children}</div>
+                            <div>{isNotes && code ? stripNotePrefix(children) : children}</div>
                           </li>
                         );
                       },
