@@ -9,12 +9,8 @@ function stripHeadingNumber(text: string) {
   return text.replace(/^\s*\d+\s+/, '').trim();
 }
 
-function isQuotesSection(title: string) {
-  return title.startsWith('金句摘录');
-}
-
 function isNotesSection(title: string) {
-  return title.startsWith('逐段精读指引');
+  return title.startsWith('金句摘录');
 }
 
 function splitByH2(markdown: string) {
@@ -88,7 +84,6 @@ export default function StudyGuidePage({ params }: { params: { id: string } }) {
 
   const rawSections = splitByH2(doc.content);
   const sections = rawSections
-    .filter((s) => !isQuotesSection(stripHeadingNumber(s.heading)))
     .map((s) => ({ ...s, heading: stripHeadingNumber(s.heading) }));
 
   return (
