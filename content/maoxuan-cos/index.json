@@ -182,6 +182,19 @@
           "original_path": "content/maoxuan-original/v1/mx-v1-014.md",
           "cos": { "stage": 5, "module": "discourse" },
           "prev_learning": "mx-v1-013",
+          "next_learning": "mx-v1-015",
+          "cross_refs": [],
+          "concepts": []
+        },
+        {
+          "id": "mx-v1-015",
+          "volume": "v1",
+          "title": "中国共产党在抗日时期的任务",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19370503.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-015.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-015.md",
+          "cos": { "stage": 5, "module": "leadership" },
+          "prev_learning": "mx-v1-014",
           "next_learning": null,
           "cross_refs": [],
           "concepts": []
@@ -218,6 +231,6 @@
     "v3": { "label": "第三卷", "items": [] },
     "v4": { "label": "第四卷", "items": [] }
   },
-  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004", "mx-v1-005", "mx-v1-006", "mx-v1-007", "mx-v1-008", "mx-v1-009", "mx-v1-010", "mx-v1-011", "mx-v1-012", "mx-v1-013", "mx-v1-014"],
+  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004", "mx-v1-005", "mx-v1-006", "mx-v1-007", "mx-v1-008", "mx-v1-009", "mx-v1-010", "mx-v1-011", "mx-v1-012", "mx-v1-013", "mx-v1-014", "mx-v1-015"],
   "concepts": []
 }
