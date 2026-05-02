@@ -39,6 +39,19 @@
           "original_path": "content/maoxuan-original/v1/mx-v1-003.md",
           "cos": { "stage": 3, "module": "base" },
           "prev_learning": "mx-v1-002",
+          "next_learning": "mx-v1-004",
+          "cross_refs": [],
+          "concepts": []
+        },
+        {
+          "id": "mx-v1-004",
+          "volume": "v1",
+          "title": "井冈山的斗争",
+          "source_url": "https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19281125.htm",
+          "guide_path": "content/maoxuan-guides/v1/mx-v1-004.md",
+          "original_path": "content/maoxuan-original/v1/mx-v1-004.md",
+          "cos": { "stage": 3, "module": "execution" },
+          "prev_learning": "mx-v1-003",
           "next_learning": null,
           "cross_refs": [],
           "concepts": []
@@ -75,6 +88,6 @@
     "v3": { "label": "第三卷", "items": [] },
     "v4": { "label": "第四卷", "items": [] }
   },
-  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003"],
+  "learningOrder": ["mx-v1-001", "mx-v1-002", "mx-v1-003", "mx-v1-004"],
   "concepts": []
 }
