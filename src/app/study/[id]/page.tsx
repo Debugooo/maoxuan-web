@@ -72,7 +72,9 @@ function extractHighlightsMap(original: string) {
     const code = codeMatch[1];
     const text = raw.replace(/^\s*〔H\d{2}〕\s*/, '').trim();
     const cleaned = text.replace(/\[\d+\]/g, '').replace(/\s{2,}/g, ' ').trim();
-    map.set(code, cleaned);
+    const last = cleaned.slice(-1);
+    const needsPeriod = cleaned.length > 0 && !'。！？；：…）)”’】》〕.!?;:)'.includes(last);
+    map.set(code, needsPeriod ? `${cleaned}。` : cleaned);
   }
   return map;
 }
