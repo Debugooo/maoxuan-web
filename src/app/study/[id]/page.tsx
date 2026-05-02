@@ -84,8 +84,13 @@ export default function StudyGuidePage({ params }: { params: { id: string } }) {
 
   const rawSections = splitByH2(doc.content);
   const sections = rawSections
-    .map((s) => ({ ...s, heading: stripHeadingNumber(s.heading) }))
-    .filter((s) => s.body.trim().length > 0);
+    .map((s) => {
+      const numberMatch = s.heading.match(/^\s*(\d+)\s+/);
+      const number = numberMatch ? Number(numberMatch[1]) : null;
+      return { ...s, heading: stripHeadingNumber(s.heading), number };
+    })
+    .filter((s) => s.body.trim().length > 0)
+    .filter((s) => !(s.number === 5 && s.heading.startsWith('金句摘录')));
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
