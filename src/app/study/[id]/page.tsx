@@ -44,11 +44,8 @@ function splitByH2(markdown: string) {
 
 function extractNoteCode(children: unknown) {
   const text = String(children);
-  const m1 = text.match(/^H(\d{2})：/);
-  if (m1) return `H${m1[1]}`;
-  const m2 = text.match(/^〔H(\d{2})〕/);
-  if (m2) return `H${m2[1]}`;
-  return null;
+  const m = text.match(/^H(\d{2})：/);
+  return m ? `H${m[1]}` : null;
 }
 
 function extractHighlightsMap(original: string) {
@@ -138,8 +135,7 @@ export default function StudyGuidePage({ params }: { params: { id: string } }) {
                     components={{
                       li: ({ children, ...props }) => {
                         const code = extractNoteCode(children);
-                        const hasInlineQuote = /^\s*〔H\d{2}〕/.test(String(children));
-                        const excerpt = isNotes && code && !hasInlineQuote ? highlightMap.get(code) : null;
+                        const excerpt = isNotes && code ? highlightMap.get(code) : null;
                         return (
                           <li id={code ? `note-${code}` : undefined} {...props}>
                             {excerpt ? (
