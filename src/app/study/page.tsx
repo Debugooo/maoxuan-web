@@ -23,7 +23,7 @@ export default function StudyPage() {
           <div
             key={v.volume}
             className="rounded-2xl p-5"
-            style={{ border: '1px solid var(--wx-panel-border)', background: 'rgba(255,255,255,0.02)' }}
+            style={{ border: '1px solid var(--wx-panel-border)', background: 'rgba(255,255,255,0.035)' }}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
