@@ -14,13 +14,13 @@ export default function StudyPage() {
           研读系统（COS）
         </h1>
         <p className="mt-2" style={{ color: 'var(--wx-ink-soft)' }}>
-          以四卷为骨架：每卷先掌握主问题与方法，再进入目录逐篇推进，把历史文本转成可复用的分析与行动框架。
+          以五卷为骨架：先抓每卷的主问题与方法，再进入目录逐篇推进，把历史文本转成可复用的分析与行动框架。
         </p>
       </header>
 
       <section className="wx-surface rounded-2xl p-6 mb-6">
         <h2 className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
-          毛选四卷导读
+          毛选五卷导读
         </h2>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           {VOLUMES.map((v) => (
