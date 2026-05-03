@@ -16,7 +16,7 @@ export type BookGroup = {
 };
 
 export type VolumeGuide = {
-  volume: Extract<VolumeId, 'v1' | 'v2' | 'v3' | 'v4'>;
+  volume: Extract<VolumeId, 'v1' | 'v2' | 'v3' | 'v4' | 'v5'>;
   range: string;
   label: string;
   theme: string;
@@ -64,6 +64,7 @@ const DEFAULT_TAGS: Record<VolumeId, string[]> = {
   v2: ['抗日战争', '统一战线', '战略判断', '政治动员', '建党'],
   v3: ['整风', '根据地治理', '学习方法', '领导方法', '政策'],
   v4: ['解放战争', '土地改革', '政权建设', '战略', '建国'],
+  v5: ['治国理政', '社会主义建设', '人民内部矛盾', '反腐整风', '国际斗争'],
 };
 
 const KEYWORD_TAGS: Array<[RegExp, string]> = [
@@ -138,7 +139,7 @@ export const VOLUMES: VolumeGuide[] = [
     label: '第一卷',
     theme: '革命的基本问题与土地革命经验',
     intro:
-      '这一卷把“革命到底怎么落地”讲清楚：先用阶级分析找对象与同盟，再用农民运动与根据地建设把力量组织起来，最后以军事斗争与两篇哲学方法论把“从实际出发、具体分析”固化为工作纪律。',
+      '这一卷可以说是中国共产党人在黑暗里摸索出路的“生存指南”。敌强我弱、四面围堵，年轻的革命者首先要回答的不是“怎样胜利”，而是“怎样活下去”。毛泽东没有躲进书斋去抄答案，他脱下长衫，把脚踩进泥里：从阶级与农民问题入手，去辨人心的走向，去摸力量的源头。于是你会看到《湖南农民运动考察报告》那种带着泥土气的目光，也会看到《星星之火，可以燎原》那种在绝境里点灯的判断——不是豪言壮语，而是把残酷现实拆开，硬生生踩出一条“农村包围城市”的路。',
     bullets: ['阶级分析：确认对象、动力与同盟', '农民运动：发动群众与组织力量', '根据地建设：政权、经济与武装的生存体系', '实践论/矛盾论：从实际出发的认识与分析方法'],
     bookGroups: [
       {
@@ -249,7 +250,7 @@ export const VOLUMES: VolumeGuide[] = [
     label: '第二卷',
     theme: '抗日战争战略与新民主主义理论',
     intro:
-      '这一卷的主任务是把战争形势判断转成组织行动：既要提出持久战与游击战的战略结构，又要在统一战线中坚持独立自主，同时完成政治动员、干部队伍与舆论阵地的系统建设。',
+      '当山河破碎、亡国论与速胜论交织成一片喧嚣时，中国到底路在何方？这一卷的文字，像在风雨里竖起一根根路标：它一面把战争的规律算清楚，一面把人心与组织的账也算清楚。最耀眼的莫过于《论持久战》——它不是简单的军事判断，而是把“时间”变成武器，把“信心”变成能力，把“人民”变成决定胜负的结构；同时，《新民主主义论》等文章又像一张施工图，把革命将走向何处、国家应如何重建，讲得清清楚楚。读完这一卷，你会感觉视野被抬高：局部的胜败退到后面，全局的节奏和路线浮上来。',
     bullets: ['统一战线：团结抗日与独立自主', '持久战与人民战争：战略结构与打法', '新民主主义理论：政治路线与社会方案', '党的建设：干部、纪律与政治领导'],
     bookGroups: [
       {
@@ -305,7 +306,7 @@ export const VOLUMES: VolumeGuide[] = [
     label: '第三卷',
     theme: '整风与根据地建设：抗战胜利的内功',
     intro:
-      '这一卷聚焦“内部建设”：通过改造学习、整顿作风、反对党八股，解决组织的认知与纪律问题；同时处理经济财政、政策执行与领导方法，把根据地治理做成稳定运转的系统，并对战后格局给出总判断。',
+      '外患未平，内耗又起。胜利并不会自动降临，组织也不会自动变强——恰恰在最艰难的相持岁月里，思想的混乱、作风的漂浮、学习的虚假，会悄悄把一支队伍掏空。这一卷展示的是一种近乎“刮骨疗毒”的自我革新：从《改造我们的学习》《整顿党的作风》到《反对党八股》，刀锋直指人性的懒惰与组织的积弊，把“空话”“虚功”“小聪明”一层层剥掉，逼着人回到事实、回到问题、回到纪律。然后，《为人民服务》又用最朴素的语言，把一切归结到根上：一个组织能走多远，最终取决于它把谁放在心上、把什么当作目的。',
     bullets: ['整风：纠偏学风文风作风，重建方法', '调查研究/实事求是：把认识改造成证据链', '文艺为人民：文化动员与群众连接', '根据地治理：政权运行、政策执行与群众工作'],
     bookGroups: [
       {
@@ -352,7 +353,7 @@ export const VOLUMES: VolumeGuide[] = [
     label: '第四卷',
     theme: '解放战争与建国前夕的国家构想',
     intro:
-      '这一卷把“夺取全国政权”拆成可执行序列：战后方针与谈判策略、粉碎内战进攻的军事原则、土地改革与新解放区治理、党委工作方法与建国纲领，最终把胜利转化为新的国家能力与政治秩序。',
+      '这是《毛选》中最酣畅淋漓的一卷，也是“阳谋”与“大势”结合到极致的篇章。你会看到一种强烈的推进感：从抗战胜利后的时局判断开始，局势像潮水一样翻涌，而文字像指挥刀一样稳定——每一次判断都指向下一步，每一份电报都在塑造未来。三大战役期间的系列方略尤其让人震撼：它不仅是军事指挥的艺术，更像是一套对人性、资源、组织与时间的综合操盘。读这一卷，会有一种清晰的感觉：所谓“大势”，不是等来的；是把分散的力量组织起来，把摇摆的人心凝聚起来，把复杂的局面拆成可执行的步骤，一步步推出来的。',
     bullets: ['解放战争战略：集中优势、各个歼灭与战略推进', '土地改革与动员：重塑社会基础与组织能力', '人民民主专政：国家形态与政治秩序', '建国构想：政治、经济与外交的总体框架'],
     bookGroups: [
       {
@@ -428,6 +429,93 @@ export const VOLUMES: VolumeGuide[] = [
           { title: '友谊还是侵略', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19490830.htm' },
           { title: '为什么要讨论白皮书', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19490828.htm' },
           { title: '唯心历史观的破产', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19490916.htm' },
+        ],
+      },
+    ],
+  },
+  {
+    volume: 'v5',
+    range: '1949–1957',
+    label: '第五卷',
+    theme: '治国理政与社会主义建设的开局',
+    intro:
+      '这一卷记录的是中国共产党从“打江山”到“治江山”的惊险一跃：胜利之后不是松一口气，而是走进另一种更艰难的战场。新中国在废墟上起步，外有封锁与战争的压迫，内有贪腐、低效与思想混乱的暗流，任何一次失手都可能让新秩序在摇晃中走形。你会看到一个“开国CEO”式的毛泽东：既要在《论十大关系》里做宏观层面的资源调配与结构布局，又要在《关于正确处理人民内部矛盾的问题》中拿出更柔性的冲突管理智慧——既要敢于划线，也要懂得疏导；既要建制度的骨架，也要稳住人心的温度。这一卷读下来，会让你意识到：夺取政权只是开始，治理才是真正漫长的考验。',
+    bullets: ['开国治政：从胜利转入治理', '宏观布局：资源配置与结构调度', '内部矛盾：冲突管理与群众工作', '国家建设：制度、作风与路线选择'],
+    bookGroups: [
+      {
+        title: '社会主义革命和社会主义建设时期（一）',
+        items: [
+          { title: '出版说明', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-vol5.htm' },
+          { title: '中国人民站起来了', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19490921.htm' },
+          { title: '中国人民大团结万岁', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19490930.htm' },
+          { title: '人民英雄们永垂不朽', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19490930b.htm' },
+          { title: '永远保持艰苦奋斗的作风', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19491026.htm' },
+          { title: '征询对待富农策略问题的意见', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19500312.htm' },
+          { title: '为争取国家财政经济状况的基本好转而斗争', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19500606.htm' },
+          { title: '不要四面出击', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19500606b.htm' },
+          { title: '做一个完全的革命派', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19500623.htm' },
+          { title: '你们是全民族的模范人物', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19500925.htm' },
+          { title: '给中国人民志愿军的命令', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19501008.htm' },
+          { title: '中国人民志愿军要爱护朝鲜的一山一水一草一木', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19510119.htm' },
+          { title: '中共中央政治局扩大会议决议要点', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19510218.htm' },
+          { title: '镇压反革命必须实行党的群众路线', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19510515.htm' },
+          { title: '镇压反革命必须打得稳，打得准，打得狠', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195012.htm' },
+          { title: '应当重视电影《武训传》的讨论', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19510520.htm' },
+          { title: '三大运动的伟大胜利', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19511023.htm' },
+          { title: '关于“三反”、“五反”的斗争', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195111.htm' },
+          { title: '把农业互助合作当作一件大事去做', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19511215.htm' },
+          { title: '元旦祝词', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19520101.htm' },
+          { title: '中共中央关于西藏工作方针的指示', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19520406.htm' },
+          { title: '工人阶级与资产阶级的矛盾是国内的主要矛盾', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19520606.htm' },
+          { title: '团结起来，划清敌我界限', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19520804.htm' },
+          { title: '祝贺中国人民志愿军的重大胜利', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19521024.htm' },
+          { title: '反对官僚主义、命令主义和违法乱纪', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530105.htm' },
+          { title: '批判大汉族主义', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530316.htm' },
+          { title: '解决“五多”问题', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530319.htm' },
+          { title: '对刘少奇、杨尚昆破坏纪律擅自以中央名义发出文件的批评', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530519.htm' },
+          { title: '批判离开总路线的右倾观点', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530615.htm' },
+          { title: '青年团的工作要照顾青年的特点', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530630.htm' },
+          { title: '关于国家资本主义', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530709.htm' },
+          { title: '党在过渡时期的总路线', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195308.htm' },
+          { title: '反对党内的资产阶级思想', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530812.htm' },
+          { title: '改造资本主义工商业的必经之路', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530907.htm' },
+          { title: '抗美援朝的伟大胜利和今后的任务', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530912.htm' },
+          { title: '批判梁漱溟的反动思想', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19530916.htm' },
+          { title: '关于农业互助合作的两次谈话', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19531015.htm' },
+          { title: '关于中华人民共和国宪法草案', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19540614.htm' },
+          { title: '为建设一个伟大的社会主义国家而奋斗', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19540915.htm' },
+          { title: '关于《红楼梦》研究问题的信', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19541016.htm' },
+          { title: '原子弹吓不倒中国人民', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19550128.htm' },
+          { title: '在中国共产党全国代表会议上的讲话', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195503.htm' },
+          { title: '驳“舆论一律”', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19550524.htm' },
+          { title: '《关于胡风反革命集团的材料》的序言和按语', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195505.htm' },
+          { title: '关于农业合作化问题', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19550731.htm' },
+          { title: '农业合作化必须依靠党团员和贫农下中农', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19550907.htm' },
+          { title: '农业合作化的一场辩论和当前的阶级斗争', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19551011.htm' },
+          { title: '《中国农村的社会主义高潮》的序言', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195509.htm' },
+          { title: '《中国农村的社会主义高潮》的按语', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195509a.htm' },
+          { title: '征询对农业十七条的意见', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19551221.htm' },
+          { title: '加快手工业的社会主义改造', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19560304.htm' },
+          { title: '论十大关系', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19560425.htm' },
+          { title: '美帝国主义是纸老虎', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19560714.htm' },
+          { title: '增强党的团结，继承党的传统', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19560830.htm' },
+          { title: '我们党的—些历史经验', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195600925.htm' },
+          { title: '纪念孙中山先生', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19561112.htm' },
+          { title: '在中国共产党第八届中央委员会第二次全体会议上的讲话', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19561115.htm' },
+          { title: '在省市自治区党委书记会议上的讲话', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195701.htm' },
+          { title: '关于正确处理人民内部矛盾的问题', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19570227.htm' },
+          { title: '在中国共产党全国宣传工作会议上的讲话', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19570312.htm' },
+          { title: '坚持艰苦奋斗，密切联系群众', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195703.htm' },
+          { title: '事情正在起变化', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19570515.htm' },
+          { title: '中国共产党是全中国人民的领导核心', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19570525.htm' },
+          { title: '组织力量反击右派分子的猖狂进攻', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19570608.htm' },
+          { title: '文汇报的资产阶级方向应当批判', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19570701.htm' },
+          { title: '打退资产阶级右派的进攻', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19570709.htm' },
+          { title: '一九五七年夏季的形势', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-195707.htm' },
+          { title: '做革命的促进派', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19571009.htm' },
+          { title: '坚定地相信群众的大多数', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19571013.htm' },
+          { title: '党内团结的辩证方法', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19571118.htm' },
+          { title: '一切反动派都是纸老虎', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19571118a.htm' },
         ],
       },
     ],

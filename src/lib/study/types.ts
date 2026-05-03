@@ -1,4 +1,4 @@
-export type VolumeId = 'v1' | 'v2' | 'v3' | 'v4';
+export type VolumeId = 'v1' | 'v2' | 'v3' | 'v4' | 'v5';
 
 export type StudyModule =
   | 'kernel'
@@ -36,4 +36,3 @@ export type StudyIndex = {
   learningOrder: string[];
   concepts: Array<{ id: string; label: string }>;
 };
-
