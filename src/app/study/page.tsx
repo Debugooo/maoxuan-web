@@ -18,68 +18,63 @@ export default function StudyPage() {
         </p>
       </header>
 
-      <section className="wx-surface rounded-2xl p-6 mb-6">
-        <h2 className="text-lg font-bold" style={{ color: 'var(--wx-ink)' }}>
-          毛选五卷导读
-        </h2>
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {VOLUMES.map((v) => (
-            <div
-              key={v.volume}
-              className="rounded-2xl p-5"
-              style={{ border: '1px solid var(--wx-panel-border)', background: 'rgba(255,255,255,0.02)' }}
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <div className="text-xs" style={{ color: 'var(--wx-ink-faint)' }}>
-                    {v.range}
-                  </div>
-                  <div className="mt-1 text-2xl font-serif font-bold" style={{ color: 'var(--wx-ink)' }}>
-                    {v.label}
-                  </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {VOLUMES.map((v) => (
+          <div
+            key={v.volume}
+            className="rounded-2xl p-5"
+            style={{ border: '1px solid var(--wx-panel-border)', background: 'rgba(255,255,255,0.02)' }}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <div className="text-xs" style={{ color: 'var(--wx-ink-faint)' }}>
+                  {v.range}
                 </div>
-                <div className="shrink-0">
-                  <span
-                    className="text-xs px-3 py-2 rounded-xl inline-block"
-                    style={{
-                      color: 'var(--wx-ink)',
-                      border: '1px solid var(--wx-panel-border)',
-                      background: 'rgba(201, 100, 66, 0.06)',
-                      maxWidth: 260,
-                    }}
-                  >
-                    {v.theme}
-                  </span>
+                <div className="mt-1 text-2xl font-serif font-bold" style={{ color: 'var(--wx-ink)' }}>
+                  {v.label}
                 </div>
               </div>
-
-              <div className="mt-4" style={{ borderTop: '1px solid var(--wx-panel-border)' }} />
-
-              <p className="mt-4 text-sm leading-7" style={{ color: 'var(--wx-ink)' }}>
-                {v.intro}
-              </p>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                {v.bullets.map((b) => (
-                  <span
-                    key={b}
-                    className="text-xs px-3 py-2 rounded-xl"
-                    style={{ border: '1px solid var(--wx-panel-border)', color: 'var(--wx-ink-soft)', background: 'rgba(255,255,255,0.02)' }}
-                  >
-                    {b}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-4">
-                <Link href={`/study/volume/${v.volume}`} className="text-sm hover:underline" style={{ color: 'var(--wx-brand)' }}>
-                  查看目录 →
-                </Link>
+              <div className="shrink-0">
+                <span
+                  className="text-xs px-3 py-2 rounded-xl inline-block"
+                  style={{
+                    color: 'var(--wx-ink)',
+                    border: '1px solid var(--wx-panel-border)',
+                    background: 'rgba(201, 100, 66, 0.06)',
+                    maxWidth: 260,
+                  }}
+                >
+                  {v.theme}
+                </span>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
+
+            <div className="mt-4" style={{ borderTop: '1px solid var(--wx-panel-border)' }} />
+
+            <p className="mt-4 text-sm leading-7" style={{ color: 'var(--wx-ink)' }}>
+              {v.intro}
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {v.bullets.map((b) => (
+                <span
+                  key={b}
+                  className="text-xs px-3 py-2 rounded-xl"
+                  style={{ border: '1px solid var(--wx-panel-border)', color: 'var(--wx-ink-soft)', background: 'rgba(255,255,255,0.02)' }}
+                >
+                  {b}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-4">
+              <Link href={`/study/volume/${v.volume}`} className="text-sm hover:underline" style={{ color: 'var(--wx-brand)' }}>
+                查看目录 →
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
     </main>
   );
 }
