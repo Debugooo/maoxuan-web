@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { VOLUMES } from '@/lib/study/volumes';
 
-export const metadata = { title: '研读系统 | 毛选生存系统' };
+export const metadata = { title: '毛选研读 | 毛选生存系统' };
 
 export default function StudyPage() {
   return (
@@ -11,10 +11,10 @@ export default function StudyPage() {
           原文 · 重点句 · 旁批 · 互文 · 学习顺序
         </div>
         <h1 className="text-3xl md:text-4xl font-serif font-bold" style={{ color: 'var(--wx-ink)' }}>
-          研读系统（COS）
+          毛选研读
         </h1>
         <p className="mt-2" style={{ color: 'var(--wx-ink-soft)' }}>
-          以五卷为骨架：先抓每卷的主问题与方法，再进入目录逐篇推进，把历史文本转成可复用的分析与行动框架。
+          用五卷把“局势、路线、组织、方法、治理”串成一条线：先读懂每卷的主问题与关键方法，再逐篇推进，把历史经验转成今天能用的判断与行动。
         </p>
       </header>
 
