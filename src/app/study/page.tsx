@@ -25,8 +25,7 @@ export default function StudyPage() {
             className="rounded-2xl p-5"
             style={{
               border: '1px solid var(--wx-panel-border)',
-              background: 'rgba(255,255,255,0.07)',
-              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)',
+              background: 'var(--wx-panel-bg)',
             }}
           >
             <div className="flex items-start justify-between gap-4">
