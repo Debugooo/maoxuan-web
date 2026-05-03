@@ -445,7 +445,6 @@ export const VOLUMES: VolumeGuide[] = [
       {
         title: '社会主义革命和社会主义建设时期（一）',
         items: [
-          { title: '出版说明', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-vol5.htm' },
           { title: '中国人民站起来了', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19490921.htm' },
           { title: '中国人民大团结万岁', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19490930.htm' },
           { title: '人民英雄们永垂不朽', source_url: 'https://www.marxists.org/chinese/maozedong/marxist.org-chinese-mao-19490930b.htm' },
